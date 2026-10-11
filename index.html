@@ -127,12 +127,12 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .head h2{font-size:clamp(44px,7vw,88px)}
 
 /* What you get */
-.grid4{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
 .feat{background:var(--bg);padding:28px 24px 32px;display:grid;gap:14px;align-content:start;transition:background .25s}
 .feat:hover{background:var(--surface)}
 .feat .ico{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--accent-soft);color:var(--accent);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .feat:hover .ico{transform:translateY(-6px)}
-.feat h3{font-size:26px}
+.feat h3{font-size:26px;overflow-wrap:break-word;hyphens:auto}
 .feat p{color:var(--muted);font-size:16px}
 
 /* Route */
@@ -191,7 +191,7 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .contact{text-align:left}
 .contact h2{font-size:clamp(56px,10vw,140px);line-height:.88}
 .contact h2 em{font-style:normal;color:var(--accent)}
-.channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.channels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
 .channel{background:var(--bg);padding:24px;display:grid;gap:6px;text-decoration:none;transition:background .2s}
 .channel:hover{background:var(--surface)}
 .channel span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
@@ -215,7 +215,7 @@ footer img{height:28px;width:auto}
 
 @media (max-width:960px){
   .route{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid4,.story-grid{grid-template-columns:1fr}
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .plans{grid-template-columns:1fr;max-width:520px}
   .channels{grid-template-columns:1fr}
   .nav ul{display:none}
@@ -303,6 +303,11 @@ footer img{height:28px;width:auto}
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
         <h3>Weekly check-ins</h3>
         <p>Every week we go over how it went, adjust the plan and keep each other on track.</p>
+      </article>
+      <article class="feat">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 14.2c2.8.3 5 2.4 5 5.8"/></svg></div>
+        <h3>Accountability partner</h3>
+        <p>Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.</p>
       </article>
     </div>
   </div>
@@ -429,17 +434,13 @@ footer img{height:28px;width:auto}
     <h2 class="reveal">Ready to<br><em>ascend?</em></h2>
     <p class="lede reveal" style="margin-top:20px">Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.</p>
     <div class="channels reveal">
-      <a class="channel" href="https://instagram.com/" target="_blank" rel="noopener">
-        <span>Instagram</span><strong>@ascendcoaching</strong>
+      <a class="channel" href="https://instagram.com/ascend1on1" target="_blank" rel="noopener">
+        <span>Instagram</span><strong>@ascend1on1</strong>
       </a>
-      <div class="channel">
-        <span>WhatsApp</span><strong>(000) 000-0000</strong>
-      </div>
-      <div class="channel">
-        <span>Email</span><strong>hello@yourdomain.com</strong>
-      </div>
+      <a class="channel" href="https://wa.me/17872144391" target="_blank" rel="noopener">
+        <span>WhatsApp</span><strong>(787) 214-4391</strong>
+      </a>
     </div>
-    <p class="note">Handle, number and email are placeholders.</p>
   </div>
 </section>
 
@@ -565,7 +566,7 @@ footer img{height:28px;width:auto}
     "Every client":"Cada cliente","Friend in your corner":"Pana en tu esquina","Cookie-cutter plans":"Planes genéricos",
     "Let's go":"Vamos","Ready to":"¿Listo para","ascend?":"ascender?",
     "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
-    "Email":"Correo","Handle, number and email are placeholders.":"Usuario, número y correo son de ejemplo.",
+    "Accountability partner":"Compañero de responsabilidad y apoyo","Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.":"Alguien en tu esquina todos los días. Una semana difícil, poca motivación o un logro grande, aquí estoy para mantenerte enfocado y apoyarte.",
     "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Mobility and recovery routine":"Rutina de movilidad y recuperación","Warm-up and mobility work":"Calentamiento y movilidad",
     "My story":"Mi historia","About me":"Sobre mí",
     "From the chubby kid to your gym partner.":"Del nene gordito a tu pana de gym.",
