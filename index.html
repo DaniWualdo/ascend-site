@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Ascend: coaching personal 1:1. Entrena con un pana que te arma el plan y entrena a tu lado.">
+<meta property="og:title" content="Ascend Coaching">
+<meta property="og:description" content="Coaching personal 1:1. Entrena conmigo.">
+<meta property="og:image" content="coach-hero.jpg">
+<link rel="icon" type="image/png" href="peak.png">
+<title>Ascend Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark-first climb. Hero ridgelines -> what you get -> the route (base camp to summit) -> plans -> coach -> contact. A fixed altitude gauge rises as you scroll. */
+:root{
+  --bg:#0A0D10; --surface:#12171C; --fg:#ECF1F4; --muted:#8B98A3; --line:#1E2830;
+  --accent:#2A98DC; --accent-ink:#06121B; --accent-soft:rgba(42,152,220,.14); --ridge:#FFFFFF;
+  --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gutter:clamp(16px,4vw,48px);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F1F4F6; --surface:#FFFFFF; --fg:#0A0E11; --muted:#55626D; --line:#D6DEE4;
+    --accent:#1C83C4; --accent-ink:#FFFFFF; --accent-soft:rgba(28,131,196,.10); --ridge:#0A0E11;
+    color-scheme:light;
+  }
+  :root:not([data-theme="dark"]) .logo-on-dark{display:none}
+  :root:not([data-theme="dark"]) .logo-on-light{display:block}
+}
+:root[data-theme="light"]{
+  --bg:#F1F4F6; --surface:#FFFFFF; --fg:#0A0E11; --muted:#55626D; --line:#D6DEE4;
+  --accent:#1C83C4; --accent-ink:#FFFFFF; --accent-soft:rgba(28,131,196,.10); --ridge:#0A0E11;
+  color-scheme:light;
+}
+:root[data-theme="light"] .logo-on-dark{display:none}
+:root[data-theme="light"] .logo-on-light{display:block}
+.logo-on-light{display:none}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--gutter)}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0;text-wrap:balance}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--muted);max-width:56ch;font-size:clamp(17px,1.6vw,19px)}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:76px}
+.brand img{height:48px;width:auto}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-weight:500;font-size:15px}
+.nav ul a{text-decoration:none;color:var(--muted);transition:color .2s}
+.nav ul a:hover{color:var(--fg)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:14px 22px;border-radius:2px;border:1px solid transparent;cursor:pointer;transition:transform .2s,background .2s,color .2s,border-color .2s}
+.btn .arr{transition:transform .25s}
+.btn:hover .arr{transform:translate(4px,-4px)}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line);color:var(--fg)}
+.btn-ghost:hover{border-color:var(--accent)}
+.btn-sm{padding:10px 16px;font-size:13px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:2px;padding:3px;gap:2px;background:var(--bg)}
+.lang button{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;background:transparent;color:var(--muted);border:0;padding:7px 10px;cursor:pointer;border-radius:1px;transition:background .2s,color .2s}
+.lang button:hover{color:var(--fg)}
+.lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+@media (max-width:420px){.nav-right .btn-sm{padding:10px 12px;font-size:12px}.nav-right .btn-sm .arr{display:none}}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#ridges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.hero-photo{position:absolute;top:0;right:0;bottom:0;width:min(54%,760px);pointer-events:none;z-index:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 42%),linear-gradient(to top,transparent 0%,#000 38%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0%,#000 42%),linear-gradient(to top,transparent 0%,#000 38%);
+  mask-composite:intersect}
+.hero-photo .inner{position:absolute;inset:-6% 0 0 0;will-change:transform}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 8%;filter:saturate(.92) contrast(1.06);animation:photoIn 1.6s cubic-bezier(.2,.8,.2,1) both}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 45%,var(--accent-soft))}
+.hero-cut{z-index:2}
+.hero-cut::after{content:none}
+@keyframes photoIn{from{transform:scale(1.07)}to{transform:none}}
+.hero .wrap{position:relative;z-index:3;padding-block:clamp(72px,11vw,140px) clamp(56px,8vw,104px);display:grid;gap:28px}
+.hero h1{font-size:clamp(64px,12vw,168px);line-height:.86}
+@media (max-width:760px){
+  .hero-photo{position:relative;width:100%;height:clamp(380px,110vw,520px);
+    -webkit-mask-image:linear-gradient(to top,transparent 0%,#000 62%);mask-image:linear-gradient(to top,transparent 0%,#000 62%)}
+  .hero-photo .inner{inset:0}
+  .hero-cut{position:absolute;top:0;left:0;right:0}
+  .hero-photo img{object-position:50% 0%}
+  .hero .wrap{margin-top:-150px;padding-top:0}
+  .hero .wrap > *{text-shadow:0 1px 18px var(--bg)}
+}
+@media (max-width:480px){.nav-right .btn-sm{display:none}}
+.hero h1 .line{display:block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .line:nth-child(2){animation-delay:.12s;color:var(--accent)}
+@keyframes rise{from{transform:translateY(.28em)}to{transform:none}}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:18px}
+.hero .meta span{display:inline-flex;align-items:center;gap:8px}
+.hero .meta span::before{content:"";width:8px;height:7px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
+
+/* Marquee */
+.marquee{border-bottom:1px solid var(--line);overflow:hidden;padding-block:18px;white-space:nowrap}
+.marquee .track{display:inline-flex;gap:40px;animation:slide 32s linear infinite;font-family:var(--display);font-size:clamp(28px,4vw,44px);text-transform:uppercase}
+.marquee .track span:nth-child(odd){color:transparent;-webkit-text-stroke:1px var(--muted)}
+.marquee .track span:nth-child(even){color:var(--fg)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* Sections */
+section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(--line)}
+.head{display:grid;gap:16px;margin-bottom:clamp(36px,5vw,56px)}
+.head h2{font-size:clamp(44px,7vw,88px)}
+
+/* What you get */
+.grid4{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.feat{background:var(--bg);padding:28px 24px 32px;display:grid;gap:14px;align-content:start;transition:background .25s}
+.feat:hover{background:var(--surface)}
+.feat .ico{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--accent-soft);color:var(--accent);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.feat:hover .ico{transform:translateY(-6px)}
+.feat h3{font-size:26px}
+.feat p{color:var(--muted);font-size:16px}
+
+/* Route */
+.route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:end}
+.stage{display:grid;gap:14px}
+.stage .col{background:linear-gradient(to top,var(--accent-soft),transparent);border-top:2px solid var(--accent);transform-origin:bottom;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.stage:nth-child(1) .col{height:60px}
+.stage:nth-child(2) .col{height:120px}
+.stage:nth-child(3) .col{height:180px}
+.stage:nth-child(4) .col{height:240px;background:linear-gradient(to top,var(--accent-soft),color-mix(in srgb,var(--accent) 30%,transparent))}
+.route.pre .col{transform:scaleY(.25)}
+.stage .camp{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:space-between;gap:8px}
+.stage .camp b{font-weight:500;color:var(--muted)}
+.stage h3{font-size:30px}
+.stage p{color:var(--muted);font-size:16px}
+
+/* Plans */
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.plan{border:1px solid var(--line);padding:32px 28px;display:grid;gap:20px;align-content:start;background:var(--bg);transition:border-color .25s,transform .25s}
+.plan:hover{border-color:var(--accent);transform:translateY(-4px)}
+.plan.feature{background:var(--surface);border-color:var(--accent);position:relative}
+.plan .tag{position:absolute;top:-12px;left:28px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
+.plan h3{font-size:32px}
+.plan .price{font-family:var(--display);font-size:56px;line-height:1}
+.plan .price small{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px}
+.plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--muted)}
+.plan li::before{content:"";width:10px;height:10px;margin-top:8px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.plan .btn{justify-content:center}
+.note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:20px;letter-spacing:.04em}
+
+/* Coach */
+.coach{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,80px);align-items:center}
+.photo{aspect-ratio:4/5;max-width:100%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;position:relative;overflow:hidden}
+.photo .portrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%;filter:saturate(.92) contrast(1.05);transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.photo:hover .portrait{transform:scale(1.03)}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 85%,transparent),transparent 40%)}
+.photo .badge{position:absolute;right:16px;bottom:16px;width:28px;z-index:1}
+.photo .cap{position:absolute;z-index:1;bottom:14px;left:16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.coach .text{display:grid;gap:22px;min-width:0}
+.coach h2{font-size:clamp(44px,6vw,76px)}
+.stats{display:flex;flex-wrap:wrap;gap:32px;border-top:1px solid var(--line);padding-top:22px}
+.stats div{display:grid;gap:2px}
+.stats b{font-family:var(--display);font-weight:400;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.stats span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.story{grid-column:1/-1;display:grid;gap:28px;border-top:1px solid var(--line);padding-top:clamp(36px,5vw,56px);margin-top:clamp(24px,4vw,48px)}
+.story-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
+.story-head .note{margin:0}
+.story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,48px)}
+.beat{display:grid;gap:12px;align-content:start;min-width:0}
+.beat h3{font-size:30px}
+.beat p{color:var(--muted);font-size:17px;line-height:2}
+.blank{display:inline-block;min-width:7ch;padding:0 6px;border-bottom:1.5px dashed var(--accent);color:var(--accent);font-family:var(--mono);font-size:.78em;letter-spacing:.03em;line-height:1.5;text-align:center}
+
+/* Contact */
+.contact{text-align:left}
+.contact h2{font-size:clamp(56px,10vw,140px);line-height:.88}
+.contact h2 em{font-style:normal;color:var(--accent)}
+.channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.channel{background:var(--bg);padding:24px;display:grid;gap:6px;text-decoration:none;transition:background .2s}
+.channel:hover{background:var(--surface)}
+.channel span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.channel strong{font-weight:600;font-size:19px;word-break:break-word}
+
+footer{padding-block:32px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;color:var(--muted);font-size:14px}
+footer img{height:28px;width:auto}
+
+/* Altitude gauge */
+.alt{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:15;display:none;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.alt .bar{width:2px;height:180px;background:var(--line);position:relative}
+.alt .fill{position:absolute;left:0;bottom:0;width:100%;height:0;background:var(--accent)}
+.alt .mark{position:absolute;left:50%;width:12px;height:12px;transform:translate(-50%,50%);bottom:0;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.alt output{color:var(--fg);font-variant-numeric:tabular-nums;writing-mode:vertical-rl;transform:rotate(180deg)}
+@media (min-width:1280px){.alt{display:flex}}
+
+/* Scroll reveal: always visible, just settles into place */
+.reveal{transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.pre{transform:translateY(32px)}
+
+@media (max-width:960px){
+  .route{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid4,.story-grid{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr;max-width:520px}
+  .coach{grid-template-columns:1fr}
+  .photo{max-width:420px}
+  .channels{grid-template-columns:1fr}
+  .nav ul{display:none}
+}
+@media (max-width:540px){
+  .grid4{grid-template-columns:1fr}
+  .route{grid-template-columns:1fr;gap:28px}
+  .stage .col{display:none}
+  .brand img{height:30px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal.pre,.route.pre .col{transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Ascend home">
+      <img class="logo-on-dark" src="logo-light.png" alt="Ascend 1:1 Personal Coaching">
+      <img class="logo-on-light" src="logo-dark.png" alt="Ascend 1:1 Personal Coaching">
+    </a>
+    <ul>
+      <li><a href="#coaching">Coaching</a></li>
+      <li><a href="#coach">Your coach</a></li>
+      <li><a href="#plans">Plans</a></li>
+      <li><a href="#route">How it works</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" id="lang-es" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" id="lang-en" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn btn-primary btn-sm" href="#contact">Let's talk <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-photo"><div class="inner" id="heroPhoto"><img src="coach-hero.jpg" alt="Ascend coach in the gym"></div></div>
+  <canvas id="ridges" aria-hidden="true"></canvas>
+  <div class="hero-photo hero-cut" aria-hidden="true"><div class="inner"><img src="coach-cutout.webp" alt=""></div></div>
+  <div class="wrap">
+    <p class="eyebrow">1:1 Personal Coaching</p>
+    <h1><span class="line">Climb</span><span class="line">higher.</span></h1>
+    <p class="lede">Not some random trainer. A training partner who builds your plan, trains next to you and keeps you honest every week. We put in the work together.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#contact">Train with me <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+      <a class="btn btn-ghost" href="#plans">See plans</a>
+    </div>
+    <div class="meta"><span>Plan made for you</span><span>We train together</span><span>No judgment</span></div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Strength</span><span>Fat loss</span><span>Muscle</span><span>Conditioning</span><span>Mobility</span><span>Accountability</span>
+    <span>Strength</span><span>Fat loss</span><span>Muscle</span><span>Conditioning</span><span>Mobility</span><span>Accountability</span>
+  </div>
+</div>
+
+<section class="block" id="coaching">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="eyebrow">What you get</p>
+      <h2>Everything you need.<br>Nothing you don't.</h2>
+    </div>
+    <div class="grid4 reveal">
+      <article class="feat">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M3 8v8M21 8v8M6 12h12"/></svg></div>
+        <h3>Custom program</h3>
+        <p>Every set and rep written for you. As you get stronger, we level it up.</p>
+      </article>
+      <article class="feat">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></div>
+        <h3>Form checks</h3>
+        <p>Send me a video of your lift and I'll tell you exactly what to fix. No ego, just better reps.</p>
+      </article>
+      <article class="feat">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+        <h3>Weekly check-ins</h3>
+        <p>Every week we go over how it went, adjust the plan and keep each other on track.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="coach">
+  <div class="wrap coach">
+    <div class="photo reveal">
+      <img class="portrait" src="coach-portrait.jpg" alt="Your Ascend coach" loading="lazy">
+      <img class="badge" src="peak.png" alt="">
+      <span class="cap">1:1 Personal Coaching</span>
+    </div>
+    <div class="text reveal">
+      <p class="eyebrow">About me</p>
+      <h2>Your coach. Your gym partner.</h2>
+      <p class="lede">Ascend isn't a trainer with a clipboard watching you suffer. It's me training next to you, texting you when you skip, and hyping up every PR. Think of it like working out with a friend who knows exactly what to do.</p>
+      <div class="stats">
+        <div><b>1:1</b><span>Every client</span></div>
+        <div><b>1</b><span>Friend in your corner</span></div>
+        <div><b>0</b><span>Cookie-cutter plans</span></div>
+      </div>
+    </div>
+    <div class="story reveal">
+      <div class="story-head">
+        <p class="eyebrow">My story</p>
+        <p class="note">Fill in the blanks with your own story.</p>
+      </div>
+      <div class="story-grid">
+        <div class="beat">
+          <h3>Where I started</h3>
+          <p>I started lifting in <span class="blank">year</span>, when I was <span class="blank">age</span>. Back then, <span class="blank">what was hard for you</span>.</p>
+        </div>
+        <div class="beat">
+          <h3>What changed</h3>
+          <p>It all clicked when <span class="blank">the moment</span>. In <span class="blank">time</span>, I went from <span class="blank">where you started</span> to <span class="blank">where you got</span>.</p>
+        </div>
+        <div class="beat">
+          <h3>Why I coach</h3>
+          <p>I coach because <span class="blank">your reason</span>. I want every person I train to <span class="blank">what you want for them</span>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="plans">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="eyebrow">Plans</p>
+      <h2>Pick your pace</h2>
+    </div>
+    <div class="plans reveal">
+      <article class="plan">
+        <h3>Online</h3>
+        <p class="price">$—<small> /month</small></p>
+        <ul>
+          <li>Custom program in an app</li>
+          <li>Weekly check-in</li>
+          <li>Form checks by video</li>
+          <li>Message support</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Choose online</a>
+      </article>
+      <article class="plan feature">
+        <span class="tag">Most popular</span>
+        <h3>Hybrid</h3>
+        <p class="price">$—<small> /month</small></p>
+        <ul>
+          <li>Everything in Online</li>
+          <li>In-person sessions each month</li>
+          <li>Mobility and recovery routine</li>
+          <li>Progress testing every 4 weeks</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Choose hybrid <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+      </article>
+      <article class="plan">
+        <h3>In person</h3>
+        <p class="price">$—<small> /month</small></p>
+        <ul>
+          <li>Coached 1:1 sessions</li>
+          <li>Hands-on form coaching</li>
+          <li>Warm-up and mobility work</li>
+          <li>Full program between sessions</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Choose in person</a>
+      </article>
+    </div>
+    <p class="note">Prices and session counts: placeholder, add your own.</p>
+  </div>
+</section>
+
+<section class="block" id="route">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="eyebrow">How it works</p>
+      <h2>The route to the top</h2>
+      <p class="lede">Same climb for everybody. We take it at your pace, together.</p>
+    </div>
+    <div class="route pre" id="routeSteps">
+      <div class="stage">
+        <div class="col"></div>
+        <p class="camp">Base camp <b>Week 1</b></p>
+        <h3>Assess</h3>
+        <p>We talk about your goals, your schedule and where you're at right now. No judgment.</p>
+      </div>
+      <div class="stage">
+        <div class="col"></div>
+        <p class="camp">Camp 1 <b>Weeks 2–4</b></p>
+        <h3>Build</h3>
+        <p>I teach you the movements and we build a routine you'll actually stick to.</p>
+      </div>
+      <div class="stage">
+        <div class="col"></div>
+        <p class="camp">Camp 2 <b>Weeks 5–12</b></p>
+        <h3>Progress</h3>
+        <p>We add weight, adjust the plan and you start seeing it in the mirror.</p>
+      </div>
+      <div class="stage">
+        <div class="col"></div>
+        <p class="camp">Summit <b>Week 12+</b></p>
+        <h3>Peak</h3>
+        <p>You hit your goal. Then we pick the next one together. There's always a higher peak.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block contact" id="contact">
+  <div class="wrap">
+    <p class="eyebrow reveal">Let's go</p>
+    <h2 class="reveal">Ready to<br><em>ascend?</em></h2>
+    <p class="lede reveal" style="margin-top:20px">Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.</p>
+    <div class="channels reveal">
+      <a class="channel" href="https://instagram.com/" target="_blank" rel="noopener">
+        <span>Instagram</span><strong>@ascendcoaching</strong>
+      </a>
+      <div class="channel">
+        <span>WhatsApp</span><strong>(000) 000-0000</strong>
+      </div>
+      <div class="channel">
+        <span>Email</span><strong>hello@yourdomain.com</strong>
+      </div>
+    </div>
+    <p class="note">Handle, number and email are placeholders.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img class="logo-on-dark" src="logo-light.png" alt="Ascend">
+    <img class="logo-on-light" src="logo-dark.png" alt="Ascend">
+    <span>© <span id="yr">2026</span> Ascend 1:1 Personal Coaching</span>
+  </div>
+</footer>
+
+<div class="alt" aria-hidden="true">
+  <span>SUMMIT</span>
+  <div class="bar"><div class="fill" id="altFill"></div><div class="mark" id="altMark"></div></div>
+  <span>BASE</span>
+  <output id="altVal">ALT 0000 M</output>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* Ridgeline background */
+  var cv = document.getElementById('ridges'), ctx = cv.getContext('2d');
+  var W=0,H=0,dpr=1,t=0,running=true;
+  function size(){
+    dpr = Math.min(window.devicePixelRatio||1,2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function accent(){ return getComputedStyle(document.documentElement).getPropertyValue('--ridge').trim() || '#FFFFFF'; }
+  function hexA(hex,a){ var h=hex.replace('#',''); if(h.length===3)h=h.split('').map(function(c){return c+c}).join(''); var n=parseInt(h,16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var col = accent(), lines = 16, peakX = W*(W<700?0.7:0.74);
+    for(var i=0;i<lines;i++){
+      var k=i/(lines-1), base=H*(0.30+k*0.68), amp=H*(0.10+0.22*(1-k));
+      ctx.beginPath();
+      for(var x=0;x<=W;x+=6){
+        var d=(x-peakX)/(W*0.22), peak=Math.exp(-d*d)*amp*1.6;
+        var n=Math.sin(x*0.006+i*1.7+t*0.35)*amp*0.18+Math.sin(x*0.017+i*0.9-t*0.22)*amp*0.08+Math.sin(x*0.041+i*2.3+t*0.5)*amp*0.03;
+        var y=base-peak-n;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=hexA(col,0.05+0.26*(1-k)*(1-k));
+      ctx.lineWidth=1;
+      ctx.stroke();
+    }
+  }
+  function loop(){ if(running){ t+=0.016; draw(); } requestAnimationFrame(loop); }
+  size(); draw();
+  window.addEventListener('resize',function(){ size(); draw(); });
+  if(!reduce){
+    new IntersectionObserver(function(e){ running=e[0].isIntersecting; }).observe(cv);
+    requestAnimationFrame(loop);
+  }
+  try{ window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',draw); }catch(e){}
+  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+  /* Scroll settle: content is always visible; items below the fold just slide into place */
+  if(!reduce && 'IntersectionObserver' in window){
+    var items=[].slice.call(document.querySelectorAll('.reveal'));
+    items.forEach(function(el){ if(el.getBoundingClientRect().top>window.innerHeight) el.classList.add('pre'); });
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target);} }); },{rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+    var route=document.getElementById('routeSteps');
+    var ro=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ setTimeout(function(){route.classList.remove('pre');},150); ro.disconnect(); } },{threshold:.35});
+    ro.observe(route);
+  } else {
+    document.getElementById('routeSteps').classList.remove('pre');
+  }
+
+  /* Altitude gauge */
+  var fill=document.getElementById('altFill'), mark=document.getElementById('altMark'), out=document.getElementById('altVal');
+  function alt(){
+    var max=document.documentElement.scrollHeight-window.innerHeight;
+    var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+    fill.style.height=(p*100)+'%'; mark.style.bottom=(p*100)+'%';
+    out.textContent='ALT '+String(Math.round(p*8849)).padStart(4,'0')+' M';
+  }
+  window.addEventListener('scroll',alt,{passive:true}); alt();
+
+  /* Hero photo drifts slower than the page */
+  var hp=[].slice.call(document.querySelectorAll('.hero-photo .inner'));
+  if(!reduce){
+    window.addEventListener('scroll',function(){
+      if(window.innerWidth<=760){ hp.forEach(function(e){e.style.transform='';}); return; }
+      var y=window.scrollY; if(y<window.innerHeight*1.2) hp.forEach(function(e){e.style.transform='translateY('+(y*0.18)+'px)';});
+    },{passive:true});
+  }
+
+  /* Language toggle: English source text, Spanish translations swapped in place */
+  var ES = {
+    "Coaching":"Entrenamiento","How it works":"Cómo funciona","Plans":"Planes","Your coach":"Tu coach",
+    "Let's talk":"Hablemos","1:1 Personal Coaching":"Coaching personal 1:1",
+    "Climb":"Sube","higher.":"más alto.",
+    "Not some random trainer. A training partner who builds your plan, trains next to you and keeps you honest every week. We put in the work together.":"No es un trainer cualquiera. Es un pana que te arma el plan, entrena a tu lado y no te deja cogerlo suave. Le metemos juntos.",
+    "Train with me":"Entrena conmigo","See plans":"Ver planes",
+    "Plan made for you":"Plan hecho para ti","Weekly check-ins":"Seguimiento semanal","In person or online":"Presencial o en línea",
+    "Strength":"Fuerza","Fat loss":"Pérdida de grasa","Muscle":"Músculo","Conditioning":"Acondicionamiento","Mobility":"Movilidad","Accountability":"Constancia",
+    "What you get":"Lo que recibes","Everything you need.":"Todo lo que necesitas.","Nothing you don't.":"Nada de relleno.",
+    "Custom program":"Programa a tu medida",
+    "Every set and rep written for you. As you get stronger, we level it up.":"Cada serie y cada rep escritas para ti. Según te pones más fuerte, le subimos.",
+    "Form checks":"Revisión de técnica",
+    "Send me a video of your lift and I'll tell you exactly what to fix. No ego, just better reps.":"Mándame un video de tu levantamiento y te digo exactamente qué corregir. Sin ego, solo mejores reps.",
+    "Nutrition guidance":"Guía de nutrición",
+    "Simple targets that work with the food you already like. No boiled chicken every day.":"Metas simples con la comida que ya te gusta. Nada de pechuga hervida todos los días.",
+    "Every week we go over how it went, adjust the plan and keep each other on track.":"Cada semana repasamos cómo te fue, ajustamos el plan y nos mantenemos enfocados.",
+    "The route to the top":"La ruta a la cima","Same climb for everybody. We take it at your pace, together.":"La misma subida para todos. La hacemos a tu ritmo, juntos.",
+    "Base camp":"Campamento base","Week 1":"Semana 1","Camp 1":"Campamento 1","Weeks 2–4":"Semanas 2–4","Camp 2":"Campamento 2","Weeks 5–12":"Semanas 5–12","Summit":"Cima","Week 12+":"Semana 12+",
+    "Assess":"Evaluar","We talk about your goals, your schedule and where you're at right now. No judgment.":"Hablamos de tus metas, tu horario y dónde estás ahora mismo. Sin juicios.",
+    "Build":"Construir","I teach you the movements and we build a routine you'll actually stick to.":"Te enseño los movimientos y armamos una rutina que de verdad vas a seguir.",
+    "Progress":"Progresar","We add weight, adjust the plan and you start seeing it in the mirror.":"Le subimos peso, ajustamos el plan y lo empiezas a ver en el espejo.",
+    "Peak":"Alcanzar","You hit your goal. Then we pick the next one together. There's always a higher peak.":"Logras tu meta. Después escogemos la próxima juntos. Siempre hay una cima más alta.",
+    "Pick your pace":"Escoge tu ritmo","Online":"En línea","/month":"/mes",
+    "Custom program in an app":"Programa personalizado en una app","Weekly check-in":"Seguimiento semanal","Form checks by video":"Revisión de técnica por video","Message support":"Apoyo por mensaje","Choose online":"Escoger en línea",
+    "Most popular":"El más popular","Hybrid":"Híbrido","Everything in Online":"Todo lo de En línea","In-person sessions each month":"Sesiones presenciales cada mes","Nutrition targets":"Metas de nutrición","Progress testing every 4 weeks":"Pruebas de progreso cada 4 semanas","Choose hybrid":"Escoger híbrido",
+    "In person":"Presencial","Coached 1:1 sessions":"Sesiones 1:1 con tu coach","Hands-on form coaching":"Corrección de técnica en persona","Full program between sessions":"Programa completo entre sesiones","Choose in person":"Escoger presencial",
+    "Prices and session counts: placeholder, add your own.":"Precios y cantidad de sesiones: de ejemplo, añade los tuyos.",
+    "Your photo here":"Tu foto aquí","Your coach. Your gym partner.":"Tu coach. Tu pana de gym.",
+    "Ascend isn't a trainer with a clipboard watching you suffer. It's me training next to you, texting you when you skip, and hyping up every PR. Think of it like working out with a friend who knows exactly what to do.":"Ascend no es un trainer con un clipboard mirándote sufrir. Soy yo entrenando a tu lado, escribiéndote si faltas y celebrando cada PR contigo. Es como entrenar con un pana que sabe exactamente lo que hay que hacer.",
+    "Every client":"Cada cliente","Friend in your corner":"Pana en tu esquina","Cookie-cutter plans":"Planes genéricos",
+    "Let's go":"Vamos","Ready to":"¿Listo para","ascend?":"ascender?",
+    "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
+    "Email":"Correo","Handle, number and email are placeholders.":"Usuario, número y correo son de ejemplo.",
+    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Mobility and recovery routine":"Rutina de movilidad y recuperación","Warm-up and mobility work":"Calentamiento y movilidad",
+    "My story":"Mi historia","About me":"Sobre mí","Fill in the blanks with your own story.":"Llena los espacios con tu historia.",
+    "Where I started":"Dónde empecé","What changed":"Qué cambió","Why I coach":"Por qué soy coach",
+    "I started lifting in":"Empecé a entrenar en",", when I was":", cuando tenía",". Back then,":". En ese tiempo,",
+    "It all clicked when":"Todo hizo click cuando",". In":". En",", I went from":", pasé de","to":"a",
+    "I coach because":"Soy coach porque",". I want every person I train to":". Quiero que cada persona que entreno",
+    "year":"año","age":"edad","what was hard for you":"lo que se te hacía difícil","the moment":"el momento","time":"tiempo",
+    "where you started":"dónde empezaste","where you got":"dónde llegaste","your reason":"tu razón","what you want for them":"lo que quieres para ellos","We train together":"Entrenamos juntos","No judgment":"Sin juicios"
+  };
+  var nodes=[], walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+    var p=n.parentNode&&n.parentNode.nodeName; if(p==='SCRIPT'||p==='STYLE') return NodeFilter.FILTER_REJECT;
+    return ES.hasOwnProperty(n.nodeValue.trim())?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP; }});
+  while(walker.nextNode()){ var n=walker.currentNode, v=n.nodeValue, k=v.trim();
+    nodes.push({n:n,en:v,es:v.replace(k,ES[k])}); }
+  var btns=[].slice.call(document.querySelectorAll('.lang button'));
+  function setLang(l){
+    nodes.forEach(function(o){ o.n.nodeValue = l==='es'?o.es:o.en; });
+    document.documentElement.lang=l;
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang===l?'true':'false'); });
+    try{ localStorage.setItem('ascend-lang',l); }catch(e){}
+  }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ setLang(b.dataset.lang); }); });
+  var saved=null; try{ saved=localStorage.getItem('ascend-lang'); }catch(e){}
+  setLang(saved==='en'?'en':'es');
+})();
+</script>
+
+</body>
+</html>
