@@ -180,13 +180,18 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .stats span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 
 .story{grid-column:1/-1;display:grid;gap:28px;border-top:1px solid var(--line);padding-top:clamp(36px,5vw,56px);margin-top:clamp(24px,4vw,48px)}
-.story{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start;column-gap:clamp(24px,6vw,80px)}
+.story{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center;column-gap:clamp(24px,6vw,80px)}
 .story-head{display:grid;gap:14px}
 .story-head h3{font-size:clamp(40px,5vw,64px)}
+.before{margin:0;max-width:100%;display:grid;gap:10px}
+.story-text{display:grid;gap:24px;min-width:0}
+.before img{width:100%;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line);filter:saturate(.85)}
+.before figcaption{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.before figcaption span:first-child{color:var(--accent)}
 .story-body{display:grid;gap:18px;min-width:0}
 .story-body p{color:var(--muted);font-size:18px;line-height:1.7;max-width:62ch}
 .story-body p:last-child{color:var(--fg)}
-@media (max-width:960px){.story{grid-template-columns:1fr}}
+@media (max-width:960px){.story{grid-template-columns:1fr}.before{max-width:420px}}
 
 /* Contact */
 .contact{text-align:left}
@@ -329,6 +334,11 @@ footer img{height:28px;width:auto}
       </div>
     </div>
     <div class="story reveal">
+      <figure class="before">
+        <img src="story-before.jpg" alt="Before starting, around 240 pounds" loading="lazy">
+        <figcaption><span>Before</span><span>Around 240 lb</span></figcaption>
+      </figure>
+      <div class="story-text">
       <div class="story-head">
         <p class="eyebrow">My story</p>
         <h3>From the chubby kid to Ascend.</h3>
@@ -336,6 +346,7 @@ footer img{height:28px;width:auto}
       <div class="story-body">
         <p>Growing up, I was always the chubby kid. I got bullied for my weight for most of my childhood, and it took a toll on my confidence. During the pandemic I got up to 240 pounds, and at 17 I decided something had to change. In 2023 I started training and found out the gym was about way more than looking good. It taught me discipline, consistency and, above all, to trust myself.</p>
         <p>Today I'm 22 and at the best point of my life, physically and mentally. That's why I started Ascend. I know what it feels like to not be comfortable with yourself and to want to change without knowing where to start. I was there too. You don't have to be the strongest or have any experience to start. We all start somewhere, and I'm here to walk that road with you.</p>
+      </div>
       </div>
     </div>
   </div>
@@ -568,7 +579,7 @@ footer img{height:28px;width:auto}
     "Email":"Correo","Handle, number and email are placeholders.":"Usuario, número y correo son de ejemplo.",
     "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Mobility and recovery routine":"Rutina de movilidad y recuperación","Warm-up and mobility work":"Calentamiento y movilidad",
     "My story":"Mi historia","About me":"Sobre mí",
-    "From the chubby kid to Ascend.":"Del nene gordito a Ascend.",
+    "From the chubby kid to Ascend.":"Del nene gordito a Ascend.","Before":"Antes","Around 240 lb":"Cerca de 240 lb",
     "Growing up, I was always the chubby kid. I got bullied for my weight for most of my childhood, and it took a toll on my confidence. During the pandemic I got up to 240 pounds, and at 17 I decided something had to change. In 2023 I started training and found out the gym was about way more than looking good. It taught me discipline, consistency and, above all, to trust myself.":"Desde pequeño siempre fui el nene gordito. Sufrí bullying por mi peso durante gran parte de mi infancia, y eso afectó mucho mi confianza. Durante la pandemia llegué a pesar 240 libras, y a los 17 años decidí que tenía que hacer un cambio. En 2023 comencé a entrenar y descubrí que el gimnasio era mucho más que verme bien. Me enseñó disciplina, constancia y, sobre todo, a confiar en mí mismo.",
     "Today I'm 22 and at the best point of my life, physically and mentally. That's why I started Ascend. I know what it feels like to not be comfortable with yourself and to want to change without knowing where to start. I was there too. You don't have to be the strongest or have any experience to start. We all start somewhere, and I'm here to walk that road with you.":"Hoy tengo 22 años y estoy en el mejor momento de mi vida, tanto física como mentalmente. Por eso nace ASCEND. Sé lo que se siente no estar cómodo contigo mismo y querer cambiar sin saber por dónde empezar. Yo también estuve ahí. No tienes que ser el más fuerte ni tener experiencia para comenzar. Todos empezamos en algún lugar, y aquí estoy para acompañarte en el camino.","We train together":"Entrenamos juntos","No judgment":"Sin juicios"
   };
