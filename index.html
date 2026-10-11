@@ -180,13 +180,27 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .stats span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 
 .story{grid-column:1/-1;display:grid;gap:28px;border-top:1px solid var(--line);padding-top:clamp(36px,5vw,56px);margin-top:clamp(24px,4vw,48px)}
-.story-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px}
-.story-head .note{margin:0}
+.story-head{display:grid;gap:14px}
+.story-head h3{font-size:clamp(40px,6vw,76px)}
 .story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,48px)}
-.beat{display:grid;gap:12px;align-content:start;min-width:0}
-.beat h3{font-size:30px}
-.beat p{color:var(--muted);font-size:17px;line-height:2}
-.blank{display:inline-block;min-width:7ch;padding:0 6px;border-bottom:1.5px dashed var(--accent);color:var(--accent);font-family:var(--mono);font-size:.78em;letter-spacing:.03em;line-height:1.5;text-align:center}
+.beat{display:grid;gap:12px;align-content:start;min-width:0;border-top:1px solid var(--line);padding-top:20px}
+.beat .when{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.beat .fig{font-family:var(--display);font-size:clamp(64px,7vw,96px);line-height:.9;font-variant-numeric:tabular-nums;color:var(--muted)}
+.beat:nth-child(2) .fig{color:var(--fg)}
+.beat:nth-child(3) .fig{color:var(--accent)}
+.beat .fig small{font-family:var(--mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:10px}
+.beat h3{font-size:28px}
+.beat p:not(.when):not(.fig){color:var(--muted);font-size:17px}
+.why{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,5vw,64px);border-top:1px solid var(--line);padding-top:clamp(28px,4vw,48px)}
+.why h3{font-size:clamp(40px,5vw,64px)}
+.why .body{display:grid;gap:16px;min-width:0}
+.why .body p{color:var(--muted);font-size:18px;max-width:60ch}
+.why .body p.strong{color:var(--fg);font-weight:600}
+.quote{margin:0;display:grid;gap:22px;justify-items:start;border-top:1px solid var(--line);padding-top:clamp(32px,5vw,56px)}
+.quote img{width:34px}
+.quote p{font-family:var(--display);text-transform:uppercase;font-size:clamp(34px,4.6vw,64px);line-height:1;max-width:28ch;text-wrap:balance}
+.quote .hi{color:var(--accent)}
+@media (max-width:960px){.why{grid-template-columns:1fr}}
 
 /* Contact */
 .contact{text-align:left}
@@ -328,25 +342,46 @@ footer img{height:28px;width:auto}
         <div><b>0</b><span>Cookie-cutter plans</span></div>
       </div>
     </div>
-    <div class="story reveal">
-      <div class="story-head">
+    <div class="story">
+      <div class="story-head reveal">
         <p class="eyebrow">My story</p>
-        <p class="note">Fill in the blanks with your own story.</p>
+        <h3>From the chubby kid to Ascend.</h3>
       </div>
-      <div class="story-grid">
+      <div class="story-grid reveal">
         <div class="beat">
+          <p class="when">Before</p>
+          <p class="fig">240<small>lb</small></p>
           <h3>Where I started</h3>
-          <p>I started lifting in <span class="blank">year</span>, when I was <span class="blank">age</span>. Back then, <span class="blank">what was hard for you</span>.</p>
+          <p>Growing up, I was always the chubby kid. I got bullied for my weight for most of my childhood, and it hit my confidence and the way I saw myself hard.</p>
+          <p>During the pandemic I got up to 240 pounds. That's when I knew something had to change.</p>
         </div>
         <div class="beat">
+          <p class="when">First day</p>
+          <p class="fig">2023</p>
           <h3>What changed</h3>
-          <p>It all clicked when <span class="blank">the moment</span>. In <span class="blank">time</span>, I went from <span class="blank">where you started</span> to <span class="blank">where you got</span>.</p>
+          <p>In 2023 I started training, with no idea how much that decision would change my life. At first, like most people, I just wanted to look better.</p>
+          <p>Over time I realized the gym was way more than that. It taught me discipline, consistency and, above all, to trust myself.</p>
         </div>
         <div class="beat">
-          <h3>Why I coach</h3>
-          <p>I coach because <span class="blank">your reason</span>. I want every person I train to <span class="blank">what you want for them</span>.</p>
+          <p class="when">Today</p>
+          <p class="fig">3.5<small>years</small></p>
+          <h3>My best version</h3>
+          <p>I'm 22 now, three and a half years into training, and I'm at the best point of my life, physically and mentally.</p>
+          <p>I still have a lot of goals ahead of me, but I'm proud of how far I've come.</p>
         </div>
       </div>
+      <div class="why reveal">
+        <h3>Why Ascend exists</h3>
+        <div class="body">
+          <p>I share my story because I know what it feels like to not be comfortable with yourself, to compare yourself to everyone else and to want to change without knowing where to start. I was there too.</p>
+          <p>That's why I started Ascend. I want to help other people go through the same change I did. It's not only about a better body. It's about proving to yourself what you're capable of.</p>
+          <p class="strong">You don't have to be the strongest, the most athletic or have any gym experience to start. We all start somewhere, and I'm proof of that.</p>
+        </div>
+      </div>
+      <blockquote class="quote reveal">
+        <img src="peak.png" alt="">
+        <p><span>It doesn't matter where you start.</span> <span class="hi">It's what you're willing to do to get where you want to be.</span></p>
+      </blockquote>
     </div>
   </div>
 </section>
@@ -577,13 +612,21 @@ footer img{height:28px;width:auto}
     "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
     "Email":"Correo","Handle, number and email are placeholders.":"Usuario, número y correo son de ejemplo.",
     "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Mobility and recovery routine":"Rutina de movilidad y recuperación","Warm-up and mobility work":"Calentamiento y movilidad",
-    "My story":"Mi historia","About me":"Sobre mí","Fill in the blanks with your own story.":"Llena los espacios con tu historia.",
-    "Where I started":"Dónde empecé","What changed":"Qué cambió","Why I coach":"Por qué soy coach",
-    "I started lifting in":"Empecé a entrenar en",", when I was":", cuando tenía",". Back then,":". En ese tiempo,",
-    "It all clicked when":"Todo hizo click cuando",". In":". En",", I went from":", pasé de","to":"a",
-    "I coach because":"Soy coach porque",". I want every person I train to":". Quiero que cada persona que entreno",
-    "year":"año","age":"edad","what was hard for you":"lo que se te hacía difícil","the moment":"el momento","time":"tiempo",
-    "where you started":"dónde empezaste","where you got":"dónde llegaste","your reason":"tu razón","what you want for them":"lo que quieres para ellos","We train together":"Entrenamos juntos","No judgment":"Sin juicios"
+    "My story":"Mi historia","About me":"Sobre mí",
+    "From the chubby kid to Ascend.":"Del nene gordito a Ascend.",
+    "Before":"Antes","First day":"El primer día","Today":"Hoy","years":"años",
+    "Where I started":"Donde empecé","What changed":"Qué cambió","My best version":"Mi mejor versión","Why Ascend exists":"Por qué nace Ascend",
+    "Growing up, I was always the chubby kid. I got bullied for my weight for most of my childhood, and it hit my confidence and the way I saw myself hard.":"Desde pequeño siempre fui el nene gordito. Sufrí bullying por mi peso durante gran parte de mi infancia, y eso afectó mucho mi confianza y la manera en que me veía a mí mismo.",
+    "During the pandemic I got up to 240 pounds. That's when I knew something had to change.":"Durante la pandemia llegué a pesar 240 libras. Ahí supe que tenía que hacer un cambio en mi vida.",
+    "In 2023 I started training, with no idea how much that decision would change my life. At first, like most people, I just wanted to look better.":"En 2023 decidí comenzar a entrenar, sin imaginarme cuánto esa decisión iba a cambiar mi vida. Al principio, como muchos, solo quería verme mejor.",
+    "Over time I realized the gym was way more than that. It taught me discipline, consistency and, above all, to trust myself.":"Con el tiempo me di cuenta de que el gimnasio era mucho más que eso. Aprendí a tener disciplina, a ser constante y, sobre todo, a confiar en mí mismo.",
+    "I'm 22 now, three and a half years into training, and I'm at the best point of my life, physically and mentally.":"Hoy tengo 22 años, llevo tres años y medio entrenando y estoy en el mejor momento de mi vida, tanto física como mentalmente.",
+    "I still have a lot of goals ahead of me, but I'm proud of how far I've come.":"Todavía tengo muchas metas por cumplir, pero me siento orgulloso de lo lejos que he llegado.",
+    "I share my story because I know what it feels like to not be comfortable with yourself, to compare yourself to everyone else and to want to change without knowing where to start. I was there too.":"Comparto mi historia porque sé lo que se siente no estar cómodo contigo mismo, compararte con otras personas y querer cambiar sin saber por dónde empezar. Yo también estuve ahí.",
+    "That's why I started Ascend. I want to help other people go through the same change I did. It's not only about a better body. It's about proving to yourself what you're capable of.":"Por eso nace ASCEND. Quiero ayudar a otras personas a vivir ese mismo cambio que yo viví. No se trata solamente de conseguir un mejor físico, sino de demostrarte a ti mismo de lo que eres capaz.",
+    "You don't have to be the strongest, the most athletic or have any gym experience to start. We all start somewhere, and I'm proof of that.":"No tienes que ser el más fuerte, el más atlético ni tener experiencia en el gimnasio para comenzar. Todos empezamos en algún lugar, y yo soy prueba de eso.",
+    "It doesn't matter where you start.":"No importa dónde empiezas,",
+    "It's what you're willing to do to get where you want to be.":"sino lo que estás dispuesto a hacer para llegar a donde quieres estar.","We train together":"Entrenamos juntos","No judgment":"Sin juicios"
   };
   var nodes=[], walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
     var p=n.parentNode&&n.parentNode.nodeName; if(p==='SCRIPT'||p==='STYLE') return NodeFilter.FILTER_REJECT;
