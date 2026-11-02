@@ -150,10 +150,12 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .stage p{color:var(--muted);font-size:16px}
 
 /* Plans */
-.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:860px}
 .plan{border:1px solid var(--line);padding:32px 28px;display:grid;gap:20px;align-content:start;background:var(--bg);transition:border-color .25s,transform .25s}
 .plan:hover{border-color:var(--accent);transform:translateY(-4px)}
 .plan.feature{background:var(--surface);border-color:var(--accent);position:relative}
+.plan.soon{position:relative;border-style:dashed}
+.plan.soon h3,.plan.soon .price,.plan.soon ul{opacity:.55}
 .plan .tag{position:absolute;top:-12px;left:28px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
 .plan h3{font-size:32px}
 .plan .price{font-family:var(--display);font-size:56px;line-height:1}
@@ -353,7 +355,7 @@ footer img{height:28px;width:auto}
       <h2>Pick your pace</h2>
     </div>
     <div class="plans reveal">
-      <article class="plan">
+      <article class="plan feature">
         <h3>Online</h3>
         <p class="price">$—<small> /month</small></p>
         <ul>
@@ -362,21 +364,10 @@ footer img{height:28px;width:auto}
           <li>Form checks by video</li>
           <li>Message support</li>
         </ul>
-        <a class="btn btn-ghost" href="#contact">Choose online</a>
+        <a class="btn btn-primary" href="#contact">Choose online <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
       </article>
-      <article class="plan feature">
-        <span class="tag">Most popular</span>
-        <h3>Hybrid</h3>
-        <p class="price">$—<small> /month</small></p>
-        <ul>
-          <li>Everything in Online</li>
-          <li>In-person sessions each month</li>
-          <li>Mobility and recovery routine</li>
-          <li>Progress testing every 4 weeks</li>
-        </ul>
-        <a class="btn btn-primary" href="#contact">Choose hybrid <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
-      </article>
-      <article class="plan">
+      <article class="plan soon">
+        <span class="tag">Coming very soon</span>
         <h3>In person</h3>
         <p class="price">$—<small> /month</small></p>
         <ul>
@@ -385,7 +376,7 @@ footer img{height:28px;width:auto}
           <li>Warm-up and mobility work</li>
           <li>Full program between sessions</li>
         </ul>
-        <a class="btn btn-ghost" href="#contact">Choose in person</a>
+        <a class="btn btn-ghost" href="#contact">Let me know when it opens</a>
       </article>
     </div>
     <p class="note">Prices and session counts: placeholder, add your own.</p>
@@ -567,7 +558,7 @@ footer img{height:28px;width:auto}
     "Let's go":"Vamos","Ready to":"¿Listo para","ascend?":"ascender?",
     "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
     "Accountability partner":"Compañero de responsabilidad y apoyo","Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.":"Alguien en tu esquina todos los días. Una semana difícil, poca motivación o un logro grande, aquí estoy para mantenerte enfocado y apoyarte.",
-    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Mobility and recovery routine":"Rutina de movilidad y recuperación","Warm-up and mobility work":"Calentamiento y movilidad",
+    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Coming very soon":"Muy pronto","Let me know when it opens":"Avísame cuando abra","Mobility and recovery routine":"Rutina de movilidad y recuperación","Warm-up and mobility work":"Calentamiento y movilidad",
     "My story":"Mi historia","About me":"Sobre mí",
     "From the chubby kid to your gym partner.":"Del nene gordito a tu pana de gym.",
     "Today":"Hoy","Age 22":"22 años","Training since":"Entrenando desde","Years old":"Años",
