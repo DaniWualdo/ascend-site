@@ -150,7 +150,7 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .stage p{color:var(--muted);font-size:16px}
 
 /* Plans */
-.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:860px}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .plan{border:1px solid var(--line);padding:32px 28px;display:grid;gap:20px;align-content:start;background:var(--bg);transition:border-color .25s,transform .25s}
 .plan:hover{border-color:var(--accent);transform:translateY(-4px)}
 .plan.feature{background:var(--surface);border-color:var(--accent);position:relative}
@@ -159,6 +159,7 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .plan .tag{position:absolute;top:-12px;left:28px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
 .plan h3{font-size:32px}
 .plan .price{font-family:var(--display);font-size:56px;line-height:1}
+.plan .save{margin-top:-8px;font-size:15px;color:var(--accent)}
 .plan .price small{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em}
 .plan ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px}
 .plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--muted)}
@@ -355,16 +356,29 @@ footer img{height:28px;width:auto}
       <h2>Pick your pace</h2>
     </div>
     <div class="plans reveal">
-      <article class="plan feature">
-        <h3>Online</h3>
-        <p class="price">$—<small> /month</small></p>
+      <article class="plan">
+        <h3>Online monthly</h3>
+        <p class="price">$150<small> /month</small></p>
         <ul>
           <li>Custom program in an app</li>
           <li>Weekly check-in</li>
           <li>Form checks by video</li>
           <li>Message support</li>
         </ul>
-        <a class="btn btn-primary" href="#contact">Choose online <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+        <a class="btn btn-ghost" href="#contact">Choose monthly</a>
+      </article>
+      <article class="plan feature">
+        <span class="tag">Best value</span>
+        <h3>Online 3 months</h3>
+        <p class="price">$375<small> /3 months</small></p>
+        <p class="save">Works out to $125 a month. You save $25 every month, $75 total.</p>
+        <ul>
+          <li>Everything in the monthly plan</li>
+          <li>A focused 12-week plan</li>
+          <li>Progress testing every 4 weeks</li>
+          <li>More time to see real results</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Choose 3 months <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
       </article>
       <article class="plan soon">
         <span class="tag">Coming very soon</span>
@@ -379,7 +393,6 @@ footer img{height:28px;width:auto}
         <a class="btn btn-ghost" href="#contact">Let me know when it opens</a>
       </article>
     </div>
-    <p class="note">Prices and session counts: placeholder, add your own.</p>
   </div>
 </section>
 
@@ -548,7 +561,7 @@ footer img{height:28px;width:auto}
     "Progress":"Progresar","We add weight, adjust the plan and you start seeing it in the mirror.":"Le subimos peso, ajustamos el plan y lo empiezas a ver en el espejo.",
     "Peak":"Alcanzar","You hit your goal. Then we pick the next one together. There's always a higher peak.":"Logras tu meta. Después escogemos la próxima juntos. Siempre hay una cima más alta.",
     "Pick your pace":"Escoge tu ritmo","Online":"En línea","/month":"/mes",
-    "Custom program in an app":"Programa personalizado en una app","Weekly check-in":"Seguimiento semanal","Form checks by video":"Revisión de técnica por video","Message support":"Apoyo por mensaje","Choose online":"Escoger en línea",
+    "Custom program in an app":"Programa personalizado en una app","Weekly check-in":"Seguimiento semanal","Form checks by video":"Revisión de técnica por video","Message support":"Apoyo por mensaje","Choose online":"Escoger en línea","Online monthly":"En línea mensual","Online 3 months":"En línea 3 meses","Choose monthly":"Escoger mensual","Choose 3 months":"Escoger 3 meses","Best value":"Mejor valor","/3 months":"/3 meses","Works out to $125 a month. You save $25 every month, $75 total.":"Sale a $125 al mes. Te ahorras $25 cada mes, $75 en total.","Everything in the monthly plan":"Todo lo del plan mensual","A focused 12-week plan":"Un plan enfocado de 12 semanas","More time to see real results":"Más tiempo para ver resultados reales",
     "Most popular":"El más popular","Hybrid":"Híbrido","Everything in Online":"Todo lo de En línea","In-person sessions each month":"Sesiones presenciales cada mes","Nutrition targets":"Metas de nutrición","Progress testing every 4 weeks":"Pruebas de progreso cada 4 semanas","Choose hybrid":"Escoger híbrido",
     "In person":"Presencial","Coached 1:1 sessions":"Sesiones 1:1 con tu coach","Hands-on form coaching":"Corrección de técnica en persona","Full program between sessions":"Programa completo entre sesiones","Choose in person":"Escoger presencial",
     "Prices and session counts: placeholder, add your own.":"Precios y cantidad de sesiones: de ejemplo, añade los tuyos.",
