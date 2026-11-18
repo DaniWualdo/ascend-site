@@ -11,7 +11,7 @@
 <title>Ascend Coaching</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: dark-first climb. Hero -> coach (story first, builds trust) -> what you get (split list) -> plans -> how to start + contact. A fixed altitude gauge rises as you scroll. */
 :root{
@@ -19,7 +19,7 @@
   --accent:#2A98DC; --accent-ink:#FFFFFF; --accent-soft:rgba(42,152,220,.14); --ridge:#FFFFFF;
   --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
   --body:"Barlow","Helvetica Neue",Arial,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --mono:"Barlow","Helvetica Neue",Arial,sans-serif;
   --gutter:clamp(16px,4vw,48px);
   color-scheme:dark;
 }
@@ -51,7 +51,7 @@ a{color:inherit}
 .wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--gutter)}
 h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0;text-wrap:balance}
 p{margin:0}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .lede{color:var(--muted);max-width:56ch;font-size:clamp(17px,1.6vw,19px)}
 
 /* Nav */
@@ -75,7 +75,7 @@ p{margin:0}
 .btn-sm{padding:10px 16px;font-size:13px}
 .nav-right{display:flex;align-items:center;gap:12px}
 .lang{display:inline-flex;border:1px solid var(--line);border-radius:2px;padding:3px;gap:2px;background:var(--bg)}
-.lang button{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;background:transparent;color:var(--muted);border:0;padding:7px 10px;cursor:pointer;border-radius:1px;transition:background .2s,color .2s}
+.lang button{font-family:var(--mono);font-weight:600;font-size:13px;font-weight:500;letter-spacing:.1em;background:transparent;color:var(--muted);border:0;padding:7px 10px;cursor:pointer;border-radius:1px;transition:background .2s,color .2s}
 .lang button:hover{color:var(--fg)}
 .lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 @media (max-width:420px){.nav-right .btn-sm{padding:10px 12px;font-size:12px}.nav-right .btn-sm .arr{display:none}}
@@ -111,7 +111,7 @@ p{margin:0}
 .hero h1 .line:nth-child(2){animation-delay:.12s;color:var(--accent)}
 @keyframes rise{from{transform:translateY(.28em)}to{transform:none}}
 .hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
-.hero .meta{display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:18px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:18px}
 .hero .meta span{display:inline-flex;align-items:center;gap:8px}
 .hero .meta span::before{content:"";width:8px;height:7px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
 
@@ -128,12 +128,12 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .head h2{font-size:clamp(44px,7vw,88px)}
 
 /* What you get: sticky heading left, list of rows right */
-.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,6vw,96px);align-items:start}
-.split .head{margin:0;display:grid;gap:16px}
-.split .phone-wrap{margin-top:clamp(20px,3vw,36px);justify-items:start}
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"phone head" "phone feats";column-gap:clamp(28px,6vw,96px);row-gap:clamp(28px,3vw,40px);align-items:start}
+.split .head{grid-area:head;margin:0;display:grid;gap:16px}
+.split .phone-wrap{grid-area:phone;position:sticky;top:120px;align-self:start;justify-items:start}
 .split .phone-wrap::before{left:-10%}
 .split .head h2{font-size:clamp(40px,4.4vw,60px)}
-.feats{display:grid;border-top:1px solid var(--line)}
+.feats{grid-area:feats;display:grid;border-top:1px solid var(--line)}
 .feat{display:grid;grid-template-columns:44px minmax(0,1fr);gap:6px 20px;padding:26px 0;border-bottom:1px solid var(--line)}
 .feat .ico{grid-row:span 2;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--accent-soft);color:var(--accent);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .feat:hover .ico{transform:translateY(-4px)}
@@ -147,16 +147,16 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .plan.feature{background:var(--surface);border-color:var(--accent);position:relative}
 .plan.soon{position:relative;border-style:dashed}
 .plan.soon h3,.plan.soon .price,.plan.soon ul{opacity:.55}
-.plan .tag{position:absolute;top:-12px;left:28px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
+.plan .tag{position:absolute;top:-12px;left:28px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
 .plan h3{font-size:32px}
 .plan .price{font-family:var(--display);font-size:56px;line-height:1}
 .plan .save{margin-top:-8px;font-size:15px;color:var(--accent)}
-.plan .price small{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em}
+.plan .price small{font-family:var(--mono);font-weight:600;font-size:14px;color:var(--muted);letter-spacing:.06em}
 .plan ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px}
 .plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;color:var(--muted)}
 .plan li::before{content:"";width:10px;height:10px;margin-top:8px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
 .plan .btn{justify-content:center}
-.note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:20px;letter-spacing:.04em}
+.note{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--muted);margin-top:20px;letter-spacing:.04em}
 .swipe{display:none}
 .plan-tabs{display:none}
 
@@ -171,17 +171,17 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .pair img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
 .pair figure:hover img{transform:scale(1.04)}
 .pair .was img{filter:saturate(.8)}
-.pair figcaption{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pair figcaption{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .pair figcaption span:first-child{color:var(--accent)}
 .profile{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border-top:1px solid var(--line)}
 .profile div{padding:14px 12px 0 0;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
-.profile dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.profile dt{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .profile dd{margin:0;font-family:var(--display);font-size:28px;line-height:1;text-transform:uppercase}
 .coach .text{grid-area:text;display:grid;gap:18px;min-width:0}
 .coach .text p{color:var(--muted);font-size:18px;line-height:1.7;max-width:62ch}
 .coach .text p.close{color:var(--fg)}
 .more{display:grid}
-.more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;width:max-content;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);padding:6px 0;border-bottom:1px solid currentColor}
+.more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;width:max-content;font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);padding:6px 0;border-bottom:1px solid currentColor}
 .more summary::-webkit-details-marker{display:none}
 .more summary::after{content:"";width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
 .more[open] summary::after{transform:translateY(2px) rotate(-135deg)}
@@ -196,12 +196,12 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 @media (max-width:960px){
   .coach-grid{grid-template-columns:1fr;grid-template-areas:"head" "side" "text"}
   .side{position:static;max-width:560px}
-  .split{grid-template-columns:1fr}
-  .split .head{position:static}
+  .split{grid-template-columns:1fr;grid-template-areas:"head" "phone" "feats"}
+  .split .phone-wrap{position:static}
 }
 
 /* Concept badge (beta sections) */
-.concept{display:inline-block;margin-left:10px;padding:2px 8px;border:1px dashed var(--accent);color:var(--accent);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
+.concept{display:inline-block;margin-left:10px;padding:2px 8px;border:1px dashed var(--accent);color:var(--accent);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
 
 
 /* Exercise library: phone mockup */
@@ -234,15 +234,15 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .wt img{width:100%;height:100%;object-fit:cover;object-position:left top}
 .wt .lk{position:absolute;right:5px;bottom:5px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:rgba(5,7,10,.7);color:#FFFFFF}
 .ad-copy{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:70px 16px 22px;display:grid;gap:6px;justify-items:start;background:linear-gradient(transparent,rgba(5,7,10,.82) 40%,rgba(8,30,48,.92))}
-.ad-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9FD3F5}
+.ad-kicker{font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#9FD3F5}
 .ad-num{font-family:var(--display);font-weight:400;font-size:88px;line-height:.82;background:linear-gradient(180deg,#FFFFFF 30%,#6FBDEE);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ad-line{font-family:var(--display);font-size:22px;text-transform:uppercase;line-height:1}
 .ad-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
-.ad-tags span{padding:3px 7px;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.ad-tags span{padding:3px 7px;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-family:var(--mono);font-weight:600;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85)}
 .demo-scr > img{object-position:left center}
 .callout{position:absolute;z-index:5;top:21%;right:clamp(-150px,-30vw,-46px);width:176px;padding:12px 14px 13px;border-radius:14px;background:var(--surface);border:1px solid var(--accent);color:var(--fg);box-shadow:0 18px 44px rgba(0,0,0,.45),0 0 0 6px color-mix(in srgb,var(--accent) 12%,transparent);display:grid;gap:7px;opacity:0;transform:translateY(8px) scale(.94) rotate(-2deg);transform-origin:left center;transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1);pointer-events:none}
 .callout::before{content:"";position:absolute;left:-7px;top:22px;width:12px;height:12px;background:var(--surface);border-left:1px solid var(--accent);border-bottom:1px solid var(--accent);transform:rotate(45deg)}
-.callout .tag{justify-self:start;padding:3px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase}
+.callout .tag{justify-self:start;padding:3px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
 .callout p{font-size:13px;line-height:1.35;font-weight:600}
 .phone.on-home .callout{opacity:1;transform:rotate(-2deg)}
 .pulse{position:absolute;left:82%;top:24%;width:14px;height:14px;margin:-7px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 3px var(--accent);opacity:0;transition:opacity .3s}
@@ -251,12 +251,12 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .phone.on-home .pulse{opacity:1}
 @media (max-width:760px){.callout{top:44%;right:-24px;width:150px;padding:10px 12px}.callout p{font-size:12px}}
 .demo-cap{position:absolute;left:0;right:0;bottom:0;padding:48px 14px 18px;display:grid;gap:5px;justify-items:start;color:#FFFFFF;background:linear-gradient(transparent,rgba(5,7,10,.94))}
-.demo-cap .p-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#4FB0EC}
+.demo-cap .p-tag{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#4FB0EC}
 .demo-cap .p-title{font-family:var(--display);font-size:22px;text-transform:uppercase;line-height:1}
-.lockchip{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.16);font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.lockchip{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.16);font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 .app-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:420px;margin-top:22px;position:relative}
 .app-steps button{display:grid;gap:4px;align-content:start;text-align:left;padding:10px 0 0;background:none;border:0;border-top:1px solid var(--line);color:var(--muted);font:inherit;font-size:13px;line-height:1.3;cursor:pointer;transition:color .2s,border-color .2s}
-.app-steps .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted)}
+.app-steps .n{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.12em;color:var(--muted)}
 .app-steps button[aria-pressed="true"]{color:var(--fg);border-top-color:var(--accent)}
 .app-steps button[aria-pressed="true"] .n{color:var(--accent)}
 @media (max-width:960px){.split .phone-wrap{justify-items:center}.app-steps{margin-inline:auto}}
@@ -267,13 +267,13 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .contact h2 em{font-style:normal;color:var(--accent)}
 .steps{list-style:none;margin:clamp(36px,5vw,56px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
 .steps li{display:grid;gap:10px;align-content:start;border-top:1px solid var(--line);padding-top:18px}
-.steps .n{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--accent)}
+.steps .n{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.12em;color:var(--accent)}
 .steps h3{font-size:30px}
 .steps p{color:var(--muted);font-size:16px;max-width:40ch}
 .channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:clamp(36px,5vw,56px)}
 .channel{background:var(--bg);padding:24px;display:grid;gap:6px;text-decoration:none;transition:background .2s}
 .channel:hover{background:var(--surface)}
-.channel span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.channel span{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 .channel strong{font-weight:600;font-size:19px;word-break:break-word}
 
 footer{padding-block:32px}
@@ -294,7 +294,7 @@ footer{padding-block:32px}
 .menu nav{margin-top:auto;display:grid}
 .menu nav a b{font-weight:400}
 .menu nav a{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line);text-decoration:none;font-family:var(--display);font-size:clamp(36px,11vw,52px);text-transform:uppercase;line-height:1}
-.menu nav a span{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--accent)}
+.menu nav a span{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.12em;color:var(--accent)}
 .menu .btn{margin-top:24px;justify-content:center}
 
 /* Phone dock: one tap to start, appears after the hero */
@@ -311,11 +311,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;
 footer img{height:28px;width:auto}
 
 /* Altitude gauge */
-.alt{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:15;display:none;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.alt{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:15;display:none;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.12em;color:var(--muted)}
 .alt .bar{width:2px;height:180px;background:var(--line);position:relative}
 .alt .fill{position:absolute;left:0;bottom:0;width:100%;height:0;background:var(--accent)}
 .alt .mark{position:absolute;left:50%;width:12px;height:12px;transform:translate(-50%,50%);bottom:0;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
-.alt output{color:var(--fg);font-variant-numeric:tabular-nums;writing-mode:vertical-rl;transform:rotate(180deg)}
+.alt output{color:var(--fg);font-variant-numeric:tabular-nums;font-variant-numeric:tabular-nums;writing-mode:vertical-rl;transform:rotate(180deg)}
 @media (min-width:1280px){.alt{display:flex}}
 
 /* Scroll reveal: always visible, just settles into place */
@@ -349,10 +349,10 @@ footer img{height:28px;width:auto}
   .plan.feature{order:-1}
   .plans{position:relative}
   .plan-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:6px}
-  .plan-tabs button{display:grid;gap:2px;justify-items:start;text-align:left;padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:2px;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+  .plan-tabs button{display:grid;gap:2px;justify-items:start;text-align:left;padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:2px;color:var(--muted);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
   .plan-tabs button b{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:.01em;color:var(--fg);line-height:1.1}
   .plan-tabs button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
-  .swipe{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+  .swipe{display:block;font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:14px}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -468,32 +468,32 @@ footer img{height:28px;width:auto}
       <p class="eyebrow">What you get</p>
       <h2>Everything you need.<br>Nothing you don't.</h2>
       <p class="lede">What comes with every plan.</p>
-      <div class="phone-wrap reveal">
-        <div class="phone on-home" id="appPhone" role="group" aria-label="Ascend app preview">
-          <div class="callout" aria-hidden="true"><span class="tag">Example</span><p>This is your day before you open the assigned workout.</p></div>
-          <div class="screen">
-            <span class="island"></span>
-            <div class="screens" id="appScreens">
-              <div class="scr"><img src="app/home.jpg" alt="Today's workout in the Ascend app"><span class="pulse" aria-hidden="true"></span></div>
-              <div class="scr ad-scr">
-                <div class="ad-wall" aria-hidden="true"><div class="wc"><div class="track"><div class="wt"><img src="app/ex9.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex0.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex12.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex3.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex15.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex9.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex0.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex12.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex3.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex15.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div><div class="wc"><div class="track"><div class="wt"><img src="app/ex4.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex7.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex13.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex1.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex4.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex7.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex13.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex1.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div><div class="wc"><div class="track"><div class="wt"><img src="app/ex16.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex2.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex11.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex8.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex14.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex16.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex2.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex11.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex8.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex14.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div><div class="wc"><div class="track"><div class="wt"><img src="app/ex5.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex17.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex6.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex5.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex17.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex6.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div></div>
-                <div class="ad-copy">
-                  <span class="ad-kicker">ASCEND 1:1 · Library</span>
-                  <strong class="ad-num">60+</strong>
-                  <span class="ad-line">recorded exercises</span>
-                  <div class="ad-tags"><span>Chest</span><span>Back</span><span>Legs</span><span>Shoulders</span><span>Triceps</span><span>Biceps</span><span>Core</span><span>& more</span></div>
-                  <span class="lockchip"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>Included with your plan</span></span>
-                </div>
+    </div>
+    <div class="phone-wrap reveal">
+      <div class="phone on-home" id="appPhone" role="group" aria-label="Ascend app preview">
+        <div class="callout" aria-hidden="true"><span class="tag">Example</span><p>This is your day before you open the assigned workout.</p></div>
+        <div class="screen">
+          <span class="island"></span>
+          <div class="screens" id="appScreens">
+            <div class="scr"><img src="app/home.jpg" alt="Today's workout in the Ascend app"><span class="pulse" aria-hidden="true"></span></div>
+            <div class="scr ad-scr">
+              <div class="ad-wall" aria-hidden="true"><div class="wc"><div class="track"><div class="wt"><img src="app/ex9.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex0.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex12.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex3.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex15.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex9.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex0.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex12.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex3.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex15.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div><div class="wc"><div class="track"><div class="wt"><img src="app/ex4.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex7.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex13.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex1.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex4.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex7.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex13.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex1.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div><div class="wc"><div class="track"><div class="wt"><img src="app/ex16.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex2.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex11.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex8.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex14.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex16.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex2.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex11.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex8.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex14.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div><div class="wc"><div class="track"><div class="wt"><img src="app/ex5.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex17.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex6.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex5.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex17.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex6.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="wt"><img src="app/ex10.jpg" alt=""><span class="lk"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></div></div></div></div>
+              <div class="ad-copy">
+                <span class="ad-kicker">ASCEND 1:1 · Library</span>
+                <strong class="ad-num">60+</strong>
+                <span class="ad-line">recorded exercises</span>
+                <div class="ad-tags"><span>Chest</span><span>Back</span><span>Legs</span><span>Shoulders</span><span>Triceps</span><span>Biceps</span><span>Core</span><span>& more</span></div>
+                <span class="lockchip"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>Included with your plan</span></span>
               </div>
-              <div class="scr demo-scr"><img src="app/demo.jpg" alt="Lat pulldown technique demo" loading="lazy"><div class="demo-cap"><span class="p-tag">Back</span><span class="p-title">Lat pulldown</span><span class="lockchip"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>Included with your plan</span></span></div></div>
             </div>
+            <div class="scr demo-scr"><img src="app/demo.jpg" alt="Lat pulldown technique demo" loading="lazy"><div class="demo-cap"><span class="p-tag">Back</span><span class="p-title">Lat pulldown</span><span class="lockchip"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>Included with your plan</span></span></div></div>
           </div>
         </div>
-        <div class="app-steps">
-          <button type="button" data-s="0" aria-pressed="true"><span class="n">01</span><span>Today's workout</span></button>
-          <button type="button" data-s="1" aria-pressed="false"><span class="n">02</span><span>60+ exercise library</span></button>
-          <button type="button" data-s="2" aria-pressed="false"><span class="n">03</span><span>Technique demo</span></button>
-        </div>
+      </div>
+      <div class="app-steps">
+        <button type="button" data-s="0" aria-pressed="true"><span class="n">01</span><span>Today's workout</span></button>
+        <button type="button" data-s="1" aria-pressed="false"><span class="n">02</span><span>60+ exercise library</span></button>
+        <button type="button" data-s="2" aria-pressed="false"><span class="n">03</span><span>Technique demo</span></button>
       </div>
     </div>
     <div class="feats reveal">
