@@ -203,24 +203,6 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 /* Concept badge (beta sections) */
 .concept{display:inline-block;margin-left:10px;padding:2px 8px;border:1px dashed var(--accent);color:var(--accent);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
 
-/* Results: before/after slider + client quote */
-.results-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,88px);align-items:center}
-.ba{position:relative;aspect-ratio:2/3;width:100%;max-width:440px;overflow:hidden;border:1px solid var(--line);background:var(--surface);--pos:50%;user-select:none;-webkit-user-select:none}
-.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.ba .b{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
-.ba .b img{filter:saturate(.8)}
-.ba .handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#FFFFFF;pointer-events:none}
-.ba .knob{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--accent);color:#FFFFFF;display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.45)}
-.ba{touch-action:pan-y;cursor:ew-resize}
-.ba input{position:absolute;left:0;bottom:0;width:100%;height:1px;margin:0;opacity:0;pointer-events:none}
-.ba:focus-within{outline:2px solid var(--accent);outline-offset:3px}
-.ba .lab{position:absolute;bottom:12px;padding:4px 8px;background:rgba(5,7,10,.72);color:#FFFFFF;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
-.ba .lab.l{left:12px}.ba .lab.r{right:12px}
-.results-text{display:grid;gap:22px;min-width:0}
-.results-text h2{font-size:clamp(44px,6vw,80px)}
-.quote{margin:0;font-size:clamp(20px,2vw,24px);line-height:1.5;color:var(--fg);max-width:40ch}
-.client{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.client b{color:var(--fg);font-weight:500}
 
 /* Exercise library: phone mockup */
 .lib-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,6vw,88px);align-items:center}
@@ -267,7 +249,7 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .app-steps .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted)}
 .app-steps button[aria-pressed="true"]{color:var(--fg);border-top-color:var(--accent)}
 .app-steps button[aria-pressed="true"] .n{color:var(--accent)}
-@media (max-width:960px){.results-grid{grid-template-columns:1fr}.split .phone-wrap{justify-items:center}.app-steps{margin-inline:auto}}
+@media (max-width:960px){.split .phone-wrap{justify-items:center}.app-steps{margin-inline:auto}}
 
 /* Contact */
 .contact{text-align:left}
@@ -287,9 +269,8 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 footer{padding-block:32px}
 
 /* Rhythm: alternate grounds so sections read as distinct chapters */
-#results,#plans{background:var(--surface)}
-#results{border-top:1px solid var(--line)}
-.plan{background:var(--bg)}
+#coaching,#contact{background:var(--surface)}
+.plan{background:var(--surface)}
 .plan.feature{background:color-mix(in srgb,var(--accent) 9%,var(--bg))}
 
 /* Nav: current section + phone menu */
@@ -467,25 +448,6 @@ footer img{height:28px;width:auto}
         </details>
         <p class="close">That's where ASCEND comes from. I know what it's like to want to change and feel lost. I want to help you progress, listen when something gets hard and give you genuine support. I want you to feel confident talking to me and know we're in this together.</p>
         <p class="sig"><span class="name">Marcos</span><span>Ascend coach</span></p>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="results">
-  <div class="wrap results-grid">
-    <div class="ba reveal" id="ba">
-      <img src="coach-after2.jpg" alt="Client after" loading="lazy">
-      <div class="b"><img src="story-before2.jpg" alt="Client before" loading="lazy"></div>
-      <div class="handle"><span class="knob"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M6 4 1.5 9 6 14M12 4l4.5 5-4.5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></div>
-      <span class="lab l">Before</span><span class="lab r">After</span>
-      <input type="range" min="0" max="100" value="50" id="baRange" aria-label="Drag to compare before and after">
-    </div>
-    <div class="results-text reveal">
-      <p class="eyebrow">Results <span class="concept">Concept</span></p>
-      <h2>Real results.</h2>
-      <blockquote class="quote">"This is where your client's words go. One or two lines about their experience with Ascend."</blockquote>
-      <p class="client"><b>Client name</b> · XX weeks · Online</p>
-      <div><a class="btn btn-primary" href="#contact">I want this too <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a></div>
     </div>
   </div>
 </section>
@@ -712,15 +674,6 @@ footer img{height:28px;width:auto}
     chips.forEach(function(b){ b.setAttribute('aria-pressed', +b.dataset.plan===best?'true':'false'); });
   }); },{passive:true});
 
-  /* Results: before/after slider */
-  var ba=document.getElementById('ba'), baR=document.getElementById('baRange');
-  function setPos(v){ v=Math.max(0,Math.min(100,v)); ba.style.setProperty('--pos',v+'%'); baR.value=Math.round(v); }
-  baR.addEventListener('input',function(){ setPos(+baR.value); });
-  var dragging=false;
-  function fromEvent(e){ var r=ba.getBoundingClientRect(); setPos((e.clientX-r.left)/r.width*100); }
-  ba.addEventListener('pointerdown',function(e){ dragging=true; fromEvent(e); try{ ba.setPointerCapture(e.pointerId); }catch(x){} });
-  ba.addEventListener('pointermove',function(e){ if(dragging) fromEvent(e); });
-  ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){ ba.addEventListener(t,function(){ dragging=false; }); });
 
   /* App preview: three real screens, swipe or tap the steps; advances on its own until touched */
   var scrs=document.getElementById('appScreens'), appSteps=[].slice.call(document.querySelectorAll('.app-steps button')), appCur=0, touched=false, seen=false;
