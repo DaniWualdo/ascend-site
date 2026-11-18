@@ -292,21 +292,6 @@ footer{padding-block:32px}
 .plan{background:var(--bg)}
 .plan.feature{background:color-mix(in srgb,var(--accent) 9%,var(--bg))}
 
-/* Contact as a bold blue closing band */
-.contact{position:relative;overflow:hidden;color:#FFFFFF;border-bottom:0;background:linear-gradient(140deg,#155F92 0%,#1F84C6 45%,#3AA6E6 100%)}
-.contact::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 80% at 100% 0%,rgba(255,255,255,.18),transparent 60%),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/100% 32px}
-.contact .wrap{position:relative}
-.contact .eyebrow{color:rgba(255,255,255,.85)}
-.contact h2 em{color:#06213A}
-.contact .lede{color:rgba(255,255,255,.88)}
-.contact .steps li{border-top-color:rgba(255,255,255,.35)}
-.contact .steps .n{color:#FFFFFF}
-.contact .steps p{color:rgba(255,255,255,.85)}
-.contact .channels{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.28)}
-.contact .channel{background:rgba(4,20,34,.32);color:#FFFFFF}
-.contact .channel:hover{background:rgba(4,20,34,.5)}
-.contact .channel span{color:rgba(255,255,255,.75)}
-
 /* Nav: current section + phone menu */
 .nav ul a{position:relative;padding-block:6px}
 .nav ul a[aria-current="true"]{color:var(--fg)}
@@ -325,10 +310,10 @@ footer{padding-block:32px}
 .dock{display:none}
 @media (max-width:960px){.menu-btn{display:grid}}
 @media (max-width:760px){
-  .dock{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:30;display:grid;grid-template-columns:1fr 52px;gap:8px;transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-  .dock.show{transform:none}
-  .dock .btn{justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .dock .ig{display:grid;place-items:center;border-radius:2px;background:var(--bg);border:1px solid var(--line);color:var(--fg);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:1fr 50px;gap:8px;padding:10px 12px calc(env(safe-area-inset-bottom,0px) + 10px);background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);transform:translate3d(0,110%,0);transition:transform .28s ease;will-change:transform;pointer-events:none}
+  .dock.show{transform:translate3d(0,0,0);pointer-events:auto}
+  .dock .btn{justify-content:center;padding-block:13px}
+  .dock .ig{display:grid;place-items:center;border-radius:2px;background:var(--surface);border:1px solid var(--line);color:var(--fg)}
   footer{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 90px)}
 }
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;color:var(--muted);font-size:14px}
@@ -749,18 +734,19 @@ footer img{height:28px;width:auto}
 
   /* Phone menu */
   var menu=document.getElementById('menu'), mBtn=document.getElementById('menuBtn'), mClose=document.getElementById('menuClose');
-  function openMenu(o){ menu.hidden=!o; mBtn.setAttribute('aria-expanded',o?'true':'false'); document.body.style.overflow=o?'hidden':''; if(o) mClose.focus(); else mBtn.focus(); }
+  function openMenu(o){ menu.hidden=!o; if(typeof dockState==='function') dockState(); mBtn.setAttribute('aria-expanded',o?'true':'false'); document.body.style.overflow=o?'hidden':''; if(o) mClose.focus(); else mBtn.focus(); }
   mBtn.addEventListener('click',function(){ openMenu(true); });
   mClose.addEventListener('click',function(){ openMenu(false); });
   [].forEach.call(menu.querySelectorAll('a'),function(a){ a.addEventListener('click',function(){ menu.hidden=true; mBtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !menu.hidden) openMenu(false); });
 
   /* Phone dock: visible between the hero and the contact section */
-  var dock=document.getElementById('dock'), heroIn=true, contactIn=false;
-  function dockState(){ dock.classList.toggle('show', !heroIn && !contactIn); }
+  var dock=document.getElementById('dock'), hidden={top:true,plans:false,contact:false}, dockOn=false;
+  function dockState(){ var on=!hidden.top && !hidden.plans && !hidden.contact && menu.hidden;
+    if(on!==dockOn){ dockOn=on; dock.classList.toggle('show',on); } }
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(e){ heroIn=e[0].isIntersecting; dockState(); },{threshold:.05}).observe(document.getElementById('top'));
-    new IntersectionObserver(function(e){ contactIn=e[0].isIntersecting; dockState(); },{threshold:.1}).observe(document.getElementById('contact'));
+    var dio=new IntersectionObserver(function(es){ es.forEach(function(e){ hidden[e.target.id]=e.isIntersecting; }); dockState(); },{rootMargin:'0px 0px -12% 0px'});
+    ['top','plans','contact'].forEach(function(id){ dio.observe(document.getElementById(id)); });
   }
 
   /* Nav: mark the section on screen */
