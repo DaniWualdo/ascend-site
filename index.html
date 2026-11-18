@@ -285,6 +285,52 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .channel strong{font-weight:600;font-size:19px;word-break:break-word}
 
 footer{padding-block:32px}
+
+/* Rhythm: alternate grounds so sections read as distinct chapters */
+#results,#plans{background:var(--surface)}
+#results{border-top:1px solid var(--line)}
+.plan{background:var(--bg)}
+.plan.feature{background:color-mix(in srgb,var(--accent) 9%,var(--bg))}
+
+/* Contact as a bold blue closing band */
+.contact{position:relative;overflow:hidden;color:#FFFFFF;border-bottom:0;background:linear-gradient(140deg,#155F92 0%,#1F84C6 45%,#3AA6E6 100%)}
+.contact::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 80% at 100% 0%,rgba(255,255,255,.18),transparent 60%),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/100% 32px}
+.contact .wrap{position:relative}
+.contact .eyebrow{color:rgba(255,255,255,.85)}
+.contact h2 em{color:#06213A}
+.contact .lede{color:rgba(255,255,255,.88)}
+.contact .steps li{border-top-color:rgba(255,255,255,.35)}
+.contact .steps .n{color:#FFFFFF}
+.contact .steps p{color:rgba(255,255,255,.85)}
+.contact .channels{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.28)}
+.contact .channel{background:rgba(4,20,34,.32);color:#FFFFFF}
+.contact .channel:hover{background:rgba(4,20,34,.5)}
+.contact .channel span{color:rgba(255,255,255,.75)}
+
+/* Nav: current section + phone menu */
+.nav ul a{position:relative;padding-block:6px}
+.nav ul a[aria-current="true"]{color:var(--fg)}
+.nav ul a[aria-current="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent)}
+.menu-btn{display:none;width:42px;height:42px;place-items:center;border:1px solid var(--line);border-radius:2px;background:var(--bg);color:var(--fg);cursor:pointer}
+.menu{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 20px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 28px)}
+.menu-top{display:flex;justify-content:space-between;align-items:center}
+.menu-top img{height:44px;width:auto}
+.menu nav{margin-top:auto;display:grid}
+.menu nav a b{font-weight:400}
+.menu nav a{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line);text-decoration:none;font-family:var(--display);font-size:clamp(36px,11vw,52px);text-transform:uppercase;line-height:1}
+.menu nav a span{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--accent)}
+.menu .btn{margin-top:24px;justify-content:center}
+
+/* Phone dock: one tap to start, appears after the hero */
+.dock{display:none}
+@media (max-width:960px){.menu-btn{display:grid}}
+@media (max-width:760px){
+  .dock{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);z-index:30;display:grid;grid-template-columns:1fr 52px;gap:8px;transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  .dock.show{transform:none}
+  .dock .btn{justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .dock .ig{display:grid;place-items:center;border-radius:2px;background:var(--bg);border:1px solid var(--line);color:var(--fg);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  footer{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 90px)}
+}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;color:var(--muted);font-size:14px}
 footer img{height:28px;width:auto}
 
@@ -359,9 +405,25 @@ footer img{height:28px;width:auto}
         <button type="button" id="lang-en" data-lang="en" aria-pressed="false">EN</button>
       </div>
       <a class="btn btn-primary btn-sm" href="#contact">Let's talk <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="2"/></svg></button>
     </div>
   </div>
 </nav>
+
+<div class="menu" id="menu" hidden>
+  <div class="menu-top">
+    <img class="logo-on-dark" src="logo-light.png" alt="Ascend">
+    <img class="logo-on-light" src="logo-dark.png" alt="Ascend">
+    <button type="button" class="menu-btn" id="menuClose" aria-label="Close menu" style="display:grid"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 3l12 12M15 3 3 15" stroke="currentColor" stroke-width="2"/></svg></button>
+  </div>
+  <nav aria-label="Sections">
+    <a href="#coach"><b>Your coach</b><span>01</span></a>
+    <a href="#coaching"><b>What you get</b><span>02</span></a>
+    <a href="#plans"><b>Plans</b><span>03</span></a>
+    <a href="#contact"><b>How to start</b><span>04</span></a>
+  </nav>
+  <a class="btn btn-primary" href="#contact">Train with me <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+</div>
 
 <header class="hero" id="top">
   <div class="hero-photo"><div class="inner" id="heroPhoto"><img src="coach-hero.jpg" alt="Ascend coach in the gym"></div></div>
@@ -584,6 +646,11 @@ footer img{height:28px;width:auto}
   </div>
 </section>
 
+<div class="dock" id="dock">
+  <a class="btn btn-primary" href="#contact">Train with me <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a>
+  <a class="ig" href="https://ig.me/m/ascend1on1" target="_blank" rel="noopener" aria-label="Message on Instagram"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a>
+</div>
+
 <footer>
   <div class="wrap">
     <img class="logo-on-dark" src="logo-light.png" alt="Ascend">
@@ -680,6 +747,30 @@ footer img{height:28px;width:auto}
   if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ seen=e[0].isIntersecting; },{threshold:.5}).observe(scrs); }
   if(!reduce){ setInterval(function(){ if(!touched && seen && !document.hidden) showScr((appCur+1)%3); },4200); }
 
+  /* Phone menu */
+  var menu=document.getElementById('menu'), mBtn=document.getElementById('menuBtn'), mClose=document.getElementById('menuClose');
+  function openMenu(o){ menu.hidden=!o; mBtn.setAttribute('aria-expanded',o?'true':'false'); document.body.style.overflow=o?'hidden':''; if(o) mClose.focus(); else mBtn.focus(); }
+  mBtn.addEventListener('click',function(){ openMenu(true); });
+  mClose.addEventListener('click',function(){ openMenu(false); });
+  [].forEach.call(menu.querySelectorAll('a'),function(a){ a.addEventListener('click',function(){ menu.hidden=true; mBtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !menu.hidden) openMenu(false); });
+
+  /* Phone dock: visible between the hero and the contact section */
+  var dock=document.getElementById('dock'), heroIn=true, contactIn=false;
+  function dockState(){ dock.classList.toggle('show', !heroIn && !contactIn); }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){ heroIn=e[0].isIntersecting; dockState(); },{threshold:.05}).observe(document.getElementById('top'));
+    new IntersectionObserver(function(e){ contactIn=e[0].isIntersecting; dockState(); },{threshold:.1}).observe(document.getElementById('contact'));
+  }
+
+  /* Nav: mark the section on screen */
+  var navLinks=[].slice.call(document.querySelectorAll('.nav ul a'));
+  if('IntersectionObserver' in window){
+    var spy=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ var id='#'+e.target.id;
+      navLinks.forEach(function(a){ if(a.getAttribute('href')===id) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); }); } }); },{rootMargin:'-45% 0px -50% 0px'});
+    ['coach','coaching','plans','contact'].forEach(function(id){ var el=document.getElementById(id); if(el) spy.observe(el); });
+  }
+
   /* Altitude gauge */
   var fill=document.getElementById('altFill'), mark=document.getElementById('altMark'), out=document.getElementById('altVal');
   function alt(){
@@ -733,7 +824,7 @@ footer img{height:28px;width:auto}
     "Let's go":"Vamos","Ready to":"¿Listo para","ascend?":"ascender?",
     "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
     "Accountability partner":"Compañero de responsabilidad y apoyo","Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.":"Alguien en tu esquina todos los días. Una semana difícil, poca motivación o un logro grande, aquí estoy para mantenerte enfocado y apoyarte.",
-    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","ASCEND 1:1 · Library":"ASCEND 1:1 · Biblioteca","recorded exercises":"ejercicios grabados","Today's workout":"Tu entrenamiento de hoy","60+ exercise library":"Biblioteca de 60+ ejercicios","Technique demo":"Demostración técnica","+ 50 more exercises":"+ 50 ejercicios más","Included with your plan":"Incluido en tu plan","Video and description unlocked with your plan.":"Video y descripción disponibles con tu plan.","Library of 60+ exercises":"Biblioteca de 60+ ejercicios","Every exercise in your plan comes with a recorded demo and a description, so you see how it's done before you do it.":"Cada ejercicio de tu plan viene con video demostrativo y descripción, para que veas cómo se hace antes de hacerlo.","Results":"Resultados","Concept":"Concepto","Before":"Antes","After":"Después","Real results.":"Resultados reales.","\"This is where your client's words go. One or two lines about their experience with Ascend.\"":"“Aquí van las palabras de tu cliente. Una o dos líneas sobre su experiencia con Ascend.”","Client name":"Nombre del cliente","· XX weeks · Online":"· XX semanas · En línea","Weeks":"Semanas","Pounds":"Libras","Plan":"Plan","I want this too":"Yo también quiero","Exercise library":"Biblioteca de ejercicios","recorded exercises.":"ejercicios grabados.","Your plan isn't a list of names. Every exercise comes with a demo video and a description, so you know exactly how to do it from day one.":"Tu plan no es una lista de nombres. Cada ejercicio viene con video demostrativo y descripción, para que sepas exactamente cómo hacerlo desde el primer día.","A demo video for every exercise":"Video demostrativo de cada ejercicio","Step-by-step description and form cues":"Descripción paso a paso y puntos de técnica","Organized by muscle group":"Organizados por grupo muscular","All from your phone":"Todo desde tu celular","Library":"Biblioteca","60+ exercises":"60+ ejercicios","Search exercises":"Buscar ejercicio","All":"Todos","· Video + guide":"· Video + guía","Barbell bench press":"Press de banca con barra","Dumbbell row":"Remo con mancuerna","Goblet squat":"Sentadilla goblet","Dumbbell shoulder press":"Press militar con mancuernas","Hammer curl":"Curl martillo","Romanian deadlift":"Peso muerto rumano","Lat pulldown":"Jalón al pecho","Lateral raises":"Elevaciones laterales","Plank":"Plancha","Dips":"Fondos en paralelas","Chest":"Pecho","Back":"Espalda","Legs":"Pierna","Shoulders":"Hombro","Arms":"Brazos","Core":"Core","Read the full story":"Leer historia completa","Show less":"Ver menos","What comes with every plan.":"Lo que incluye cualquier plan.","12 weeks":"12 semanas","4 weeks":"4 semanas","Soon":"Pronto","What you get":"Lo que recibes","How to start":"Cómo empezar","Format":"Modalidad","Ascend coach":"Coach de Ascend","Swipe to see all plans":"Desliza para ver todos los planes",
+    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Open menu":"Abrir menú","Close menu":"Cerrar menú","ASCEND 1:1 · Library":"ASCEND 1:1 · Biblioteca","recorded exercises":"ejercicios grabados","Today's workout":"Tu entrenamiento de hoy","60+ exercise library":"Biblioteca de 60+ ejercicios","Technique demo":"Demostración técnica","+ 50 more exercises":"+ 50 ejercicios más","Included with your plan":"Incluido en tu plan","Video and description unlocked with your plan.":"Video y descripción disponibles con tu plan.","Library of 60+ exercises":"Biblioteca de 60+ ejercicios","Every exercise in your plan comes with a recorded demo and a description, so you see how it's done before you do it.":"Cada ejercicio de tu plan viene con video demostrativo y descripción, para que veas cómo se hace antes de hacerlo.","Results":"Resultados","Concept":"Concepto","Before":"Antes","After":"Después","Real results.":"Resultados reales.","\"This is where your client's words go. One or two lines about their experience with Ascend.\"":"“Aquí van las palabras de tu cliente. Una o dos líneas sobre su experiencia con Ascend.”","Client name":"Nombre del cliente","· XX weeks · Online":"· XX semanas · En línea","Weeks":"Semanas","Pounds":"Libras","Plan":"Plan","I want this too":"Yo también quiero","Exercise library":"Biblioteca de ejercicios","recorded exercises.":"ejercicios grabados.","Your plan isn't a list of names. Every exercise comes with a demo video and a description, so you know exactly how to do it from day one.":"Tu plan no es una lista de nombres. Cada ejercicio viene con video demostrativo y descripción, para que sepas exactamente cómo hacerlo desde el primer día.","A demo video for every exercise":"Video demostrativo de cada ejercicio","Step-by-step description and form cues":"Descripción paso a paso y puntos de técnica","Organized by muscle group":"Organizados por grupo muscular","All from your phone":"Todo desde tu celular","Library":"Biblioteca","60+ exercises":"60+ ejercicios","Search exercises":"Buscar ejercicio","All":"Todos","· Video + guide":"· Video + guía","Barbell bench press":"Press de banca con barra","Dumbbell row":"Remo con mancuerna","Goblet squat":"Sentadilla goblet","Dumbbell shoulder press":"Press militar con mancuernas","Hammer curl":"Curl martillo","Romanian deadlift":"Peso muerto rumano","Lat pulldown":"Jalón al pecho","Lateral raises":"Elevaciones laterales","Plank":"Plancha","Dips":"Fondos en paralelas","Chest":"Pecho","Back":"Espalda","Legs":"Pierna","Shoulders":"Hombro","Arms":"Brazos","Core":"Core","Read the full story":"Leer historia completa","Show less":"Ver menos","What comes with every plan.":"Lo que incluye cualquier plan.","12 weeks":"12 semanas","4 weeks":"4 semanas","Soon":"Pronto","What you get":"Lo que recibes","How to start":"Cómo empezar","Format":"Modalidad","Ascend coach":"Coach de Ascend","Swipe to see all plans":"Desliza para ver todos los planes",
     "Three steps and we start. I'll get back to you within 24 hours.":"Tres pasos y arrancamos. Te contesto en menos de 24 horas.",
     "Message me":"Escríbeme","Send me a DM or a WhatsApp with your goal and how many days you can train.":"Mándame un DM o un WhatsApp con tu meta y cuántos días puedes entrenar.",
     "Initial assessment":"Evaluación inicial","You answer a few questions about your goals, history and schedule, and we take your starting weight and photos.":"Contestas unas preguntas sobre tus metas, historial y horario, y tomamos tu peso y fotos de inicio.",
