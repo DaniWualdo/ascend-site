@@ -129,7 +129,9 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 
 /* What you get: sticky heading left, list of rows right */
 .split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,6vw,96px);align-items:start}
-.split .head{margin:0;position:sticky;top:132px}
+.split .head{margin:0;display:grid;gap:16px}
+.split .phone-wrap{margin-top:clamp(20px,3vw,36px);justify-items:start}
+.split .phone-wrap::before{left:-10%}
 .split .head h2{font-size:clamp(40px,4.4vw,60px)}
 .feats{display:grid;border-top:1px solid var(--line)}
 .feat{display:grid;grid-template-columns:44px minmax(0,1fr);gap:6px 20px;padding:26px 0;border-bottom:1px solid var(--line)}
@@ -243,6 +245,9 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .app-head small{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .vid{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 40%,var(--surface)),var(--surface) 75%)}
 .vid .play{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:#0A0D10;display:grid;place-items:center}
+.vid.locked{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 28%,var(--surface)),var(--surface) 80%)}
+.vid.locked .play{background:rgba(255,255,255,.14);color:#FFFFFF;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.vid .vlab{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8)}
 .vid .bar{position:absolute;left:10px;right:10px;bottom:8px;height:3px;border-radius:2px;background:rgba(255,255,255,.25)}
 .vid .bar i{display:block;height:100%;width:0;border-radius:2px;background:#FFFFFF;animation:prog 7s linear infinite}
 @keyframes prog{to{width:100%}}
@@ -258,10 +263,10 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .rows{display:grid;gap:4px}
 .row{display:grid;grid-template-columns:46px minmax(0,1fr);gap:10px;align-items:center;padding:6px;border-radius:10px;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .row[aria-current="true"]{background:var(--surface)}
-.thumb{width:46px;height:46px;border-radius:9px;display:grid;place-items:center;color:var(--accent);background:linear-gradient(135deg,var(--accent-soft),var(--surface))}
+.thumb{width:46px;height:46px;border-radius:9px;display:grid;place-items:center;color:var(--muted);background:linear-gradient(135deg,var(--accent-soft),var(--surface))}
 .row b{display:block;font-size:13px;font-weight:600;line-height:1.25}
 .row small{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-@media (max-width:960px){.results-grid,.lib-grid{grid-template-columns:1fr}}
+@media (max-width:960px){.results-grid{grid-template-columns:1fr}.split .phone-wrap{justify-items:center}}
 
 /* Contact */
 .contact{text-align:left}
@@ -432,11 +437,6 @@ footer img{height:28px;width:auto}
       <h2>Real results.</h2>
       <blockquote class="quote">"This is where your client's words go. One or two lines about their experience with Ascend."</blockquote>
       <p class="client"><b>Client name</b> · XX weeks · Online</p>
-      <dl class="profile">
-        <div><dt>Weeks</dt><dd>XX</dd></div>
-        <div><dt>Pounds</dt><dd>−XX</dd></div>
-        <div><dt>Plan</dt><dd>Online</dd></div>
-      </dl>
       <div><a class="btn btn-primary" href="#contact">I want this too <svg class="arr" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></a></div>
     </div>
   </div>
@@ -448,12 +448,48 @@ footer img{height:28px;width:auto}
       <p class="eyebrow">What you get</p>
       <h2>Everything you need.<br>Nothing you don't.</h2>
       <p class="lede">What comes with every plan.</p>
+  <div class="phone-wrap reveal">
+    <div class="phone" role="group" aria-label="Exercise library preview">
+      <div class="screen">
+        <span class="island"></span>
+        <div class="sb"><span>9:41</span><span>100%</span></div>
+        <div class="app">
+          <div class="app-head"><img src="peak.png" alt=""><strong>Library</strong><small>60+ exercises</small></div>
+          <div class="player">
+            <div class="vid locked"><span class="play"><svg width="16" height="16" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="vlab">Included with your plan</span></div>
+            <span class="p-tag" id="pTag"></span>
+            <span class="p-title" id="pTitle"></span>
+            <span class="p-desc">Video and description unlocked with your plan.</span>
+          </div>
+          <div class="search"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m8 8 3 3" stroke="currentColor" stroke-width="1.4"/></svg><span>Search exercises</span></div>
+          <div class="chips"><button type="button" data-m="all" aria-pressed="true">All</button><button type="button" data-m="chest" aria-pressed="false">Chest</button><button type="button" data-m="back" aria-pressed="false">Back</button><button type="button" data-m="legs" aria-pressed="false">Legs</button><button type="button" data-m="shoulders" aria-pressed="false">Shoulders</button><button type="button" data-m="arms" aria-pressed="false">Arms</button><button type="button" data-m="core" aria-pressed="false">Core</button></div>
+          <div class="rows" id="exRows">
+          <button type="button" class="row" data-i="0" data-m="chest" aria-current="true"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Barbell bench press</b><small>Chest</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="1" data-m="back"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Dumbbell row</b><small>Back</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="2" data-m="legs"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Goblet squat</b><small>Legs</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="3" data-m="shoulders"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Dumbbell shoulder press</b><small>Shoulders</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="4" data-m="arms"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Hammer curl</b><small>Arms</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="5" data-m="legs"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Romanian deadlift</b><small>Legs</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="6" data-m="back"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Lat pulldown</b><small>Back</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="7" data-m="shoulders"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Lateral raises</b><small>Shoulders</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="8" data-m="core"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Plank</b><small>Core</small><small> · Video + guide</small></span></button>
+          <button type="button" class="row" data-i="9" data-m="chest"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span><span><b>Dips</b><small>Chest</small><small> · Video + guide</small></span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
     </div>
     <div class="feats reveal">
       <article class="feat">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M3 8v8M21 8v8M6 12h12"/></svg></div>
         <h3>Custom program</h3>
         <p>Every set and rep written for you. As you get stronger, we level it up.</p>
+      </article>
+      <article class="feat">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h4v14H4zM10 5h4v14h-4zM16.5 5.5l3.8 1-3.4 13-3.8-1z"/></svg></div>
+        <h3>Library of 60+ exercises</h3>
+        <p>Every exercise in your plan comes with a recorded demo and a description, so you see how it's done before you do it.</p>
       </article>
       <article class="feat">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></div>
@@ -470,53 +506,6 @@ footer img{height:28px;width:auto}
         <h3>Accountability partner</h3>
         <p>Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.</p>
       </article>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="library">
-  <div class="wrap lib-grid">
-    <div class="lib-text reveal">
-      <p class="eyebrow">Exercise library <span class="concept">Concept</span></p>
-      <h2><em>60+</em> recorded exercises.</h2>
-      <p class="lede">Your plan isn't a list of names. Every exercise comes with a demo video and a description, so you know exactly how to do it from day one.</p>
-      <ul class="checks">
-        <li>A demo video for every exercise</li>
-        <li>Step-by-step description and form cues</li>
-        <li>Organized by muscle group</li>
-        <li>All from your phone</li>
-      </ul>
-    </div>
-    <div class="phone-wrap reveal">
-      <div class="phone" role="group" aria-label="Exercise library preview">
-        <div class="screen">
-          <span class="island"></span>
-          <div class="sb"><span>9:41</span><span>100%</span></div>
-          <div class="app">
-            <div class="app-head"><img src="peak.png" alt=""><strong>Library</strong><small>60+ exercises</small></div>
-            <div class="player">
-              <div class="vid"><span class="play"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span class="bar"><i></i></span></div>
-              <span class="p-tag" id="pTag"></span>
-              <span class="p-title" id="pTitle"></span>
-              <span class="p-desc" id="pDesc"></span>
-            </div>
-            <div class="search"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m8 8 3 3" stroke="currentColor" stroke-width="1.4"/></svg><span>Search exercises</span></div>
-            <div class="chips"><button type="button" data-m="all" aria-pressed="true">All</button><button type="button" data-m="chest" aria-pressed="false">Chest</button><button type="button" data-m="back" aria-pressed="false">Back</button><button type="button" data-m="legs" aria-pressed="false">Legs</button><button type="button" data-m="shoulders" aria-pressed="false">Shoulders</button><button type="button" data-m="arms" aria-pressed="false">Arms</button><button type="button" data-m="core" aria-pressed="false">Core</button></div>
-            <div class="rows" id="exRows">
-            <button type="button" class="row" data-i="0" data-m="chest" aria-current="true"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Barbell bench press</b><small>Chest</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="1" data-m="back"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Dumbbell row</b><small>Back</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="2" data-m="legs"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Goblet squat</b><small>Legs</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="3" data-m="shoulders"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Dumbbell shoulder press</b><small>Shoulders</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="4" data-m="arms"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Hammer curl</b><small>Arms</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="5" data-m="legs"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Romanian deadlift</b><small>Legs</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="6" data-m="back"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Lat pulldown</b><small>Back</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="7" data-m="shoulders"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Lateral raises</b><small>Shoulders</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="8" data-m="core"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Plank</b><small>Core</small><small> · Video + guide</small></span></button>
-            <button type="button" class="row" data-i="9" data-m="chest"><span class="thumb"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></span><span><b>Dips</b><small>Chest</small><small> · Video + guide</small></span></button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -692,7 +681,7 @@ footer img{height:28px;width:auto}
   function renderPlayer(){ var e=EX[cur], L=lang();
     document.getElementById('pTag').textContent=MU[e.m][L];
     document.getElementById('pTitle').textContent=L==='en'?e.en:e.es;
-    document.getElementById('pDesc').textContent=L==='en'?e.den:e.des; }
+  }
   rowsEl.forEach(function(r){ r.addEventListener('click',function(){ cur=+r.dataset.i; rowsEl.forEach(function(x){ x.toggleAttribute('aria-current', x===r); if(x===r) x.setAttribute('aria-current','true'); }); renderPlayer(); }); });
   mchips.forEach(function(c){ c.addEventListener('click',function(){ var m=c.dataset.m;
     mchips.forEach(function(x){ x.setAttribute('aria-pressed', x===c?'true':'false'); });
@@ -753,7 +742,7 @@ footer img{height:28px;width:auto}
     "Let's go":"Vamos","Ready to":"¿Listo para","ascend?":"ascender?",
     "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
     "Accountability partner":"Compañero de responsabilidad y apoyo","Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.":"Alguien en tu esquina todos los días. Una semana difícil, poca motivación o un logro grande, aquí estoy para mantenerte enfocado y apoyarte.",
-    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Results":"Resultados","Concept":"Concepto","Before":"Antes","After":"Después","Real results.":"Resultados reales.","\"This is where your client's words go. One or two lines about their experience with Ascend.\"":"“Aquí van las palabras de tu cliente. Una o dos líneas sobre su experiencia con Ascend.”","Client name":"Nombre del cliente","· XX weeks · Online":"· XX semanas · En línea","Weeks":"Semanas","Pounds":"Libras","Plan":"Plan","I want this too":"Yo también quiero","Exercise library":"Biblioteca de ejercicios","recorded exercises.":"ejercicios grabados.","Your plan isn't a list of names. Every exercise comes with a demo video and a description, so you know exactly how to do it from day one.":"Tu plan no es una lista de nombres. Cada ejercicio viene con video demostrativo y descripción, para que sepas exactamente cómo hacerlo desde el primer día.","A demo video for every exercise":"Video demostrativo de cada ejercicio","Step-by-step description and form cues":"Descripción paso a paso y puntos de técnica","Organized by muscle group":"Organizados por grupo muscular","All from your phone":"Todo desde tu celular","Library":"Biblioteca","60+ exercises":"60+ ejercicios","Search exercises":"Buscar ejercicio","All":"Todos","· Video + guide":"· Video + guía","Barbell bench press":"Press de banca con barra","Dumbbell row":"Remo con mancuerna","Goblet squat":"Sentadilla goblet","Dumbbell shoulder press":"Press militar con mancuernas","Hammer curl":"Curl martillo","Romanian deadlift":"Peso muerto rumano","Lat pulldown":"Jalón al pecho","Lateral raises":"Elevaciones laterales","Plank":"Plancha","Dips":"Fondos en paralelas","Chest":"Pecho","Back":"Espalda","Legs":"Pierna","Shoulders":"Hombro","Arms":"Brazos","Core":"Core","Read the full story":"Leer historia completa","Show less":"Ver menos","What comes with every plan.":"Lo que incluye cualquier plan.","12 weeks":"12 semanas","4 weeks":"4 semanas","Soon":"Pronto","What you get":"Lo que recibes","How to start":"Cómo empezar","Format":"Modalidad","Ascend coach":"Coach de Ascend","Swipe to see all plans":"Desliza para ver todos los planes",
+    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","Included with your plan":"Incluido en tu plan","Video and description unlocked with your plan.":"Video y descripción disponibles con tu plan.","Library of 60+ exercises":"Biblioteca de 60+ ejercicios","Every exercise in your plan comes with a recorded demo and a description, so you see how it's done before you do it.":"Cada ejercicio de tu plan viene con video demostrativo y descripción, para que veas cómo se hace antes de hacerlo.","Results":"Resultados","Concept":"Concepto","Before":"Antes","After":"Después","Real results.":"Resultados reales.","\"This is where your client's words go. One or two lines about their experience with Ascend.\"":"“Aquí van las palabras de tu cliente. Una o dos líneas sobre su experiencia con Ascend.”","Client name":"Nombre del cliente","· XX weeks · Online":"· XX semanas · En línea","Weeks":"Semanas","Pounds":"Libras","Plan":"Plan","I want this too":"Yo también quiero","Exercise library":"Biblioteca de ejercicios","recorded exercises.":"ejercicios grabados.","Your plan isn't a list of names. Every exercise comes with a demo video and a description, so you know exactly how to do it from day one.":"Tu plan no es una lista de nombres. Cada ejercicio viene con video demostrativo y descripción, para que sepas exactamente cómo hacerlo desde el primer día.","A demo video for every exercise":"Video demostrativo de cada ejercicio","Step-by-step description and form cues":"Descripción paso a paso y puntos de técnica","Organized by muscle group":"Organizados por grupo muscular","All from your phone":"Todo desde tu celular","Library":"Biblioteca","60+ exercises":"60+ ejercicios","Search exercises":"Buscar ejercicio","All":"Todos","· Video + guide":"· Video + guía","Barbell bench press":"Press de banca con barra","Dumbbell row":"Remo con mancuerna","Goblet squat":"Sentadilla goblet","Dumbbell shoulder press":"Press militar con mancuernas","Hammer curl":"Curl martillo","Romanian deadlift":"Peso muerto rumano","Lat pulldown":"Jalón al pecho","Lateral raises":"Elevaciones laterales","Plank":"Plancha","Dips":"Fondos en paralelas","Chest":"Pecho","Back":"Espalda","Legs":"Pierna","Shoulders":"Hombro","Arms":"Brazos","Core":"Core","Read the full story":"Leer historia completa","Show less":"Ver menos","What comes with every plan.":"Lo que incluye cualquier plan.","12 weeks":"12 semanas","4 weeks":"4 semanas","Soon":"Pronto","What you get":"Lo que recibes","How to start":"Cómo empezar","Format":"Modalidad","Ascend coach":"Coach de Ascend","Swipe to see all plans":"Desliza para ver todos los planes",
     "Three steps and we start. I'll get back to you within 24 hours.":"Tres pasos y arrancamos. Te contesto en menos de 24 horas.",
     "Message me":"Escríbeme","Send me a DM or a WhatsApp with your goal and how many days you can train.":"Mándame un DM o un WhatsApp con tu meta y cuántos días puedes entrenar.",
     "Initial assessment":"Evaluación inicial","You answer a few questions about your goals, history and schedule, and we take your starting weight and photos.":"Contestas unas preguntas sobre tus metas, historial y horario, y tomamos tu peso y fotos de inicio.",
