@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: dark-first climb. Hero ridgelines -> what you get -> the route (base camp to summit) -> plans -> coach -> contact. A fixed altitude gauge rises as you scroll. */
+/* Layout: dark-first climb. Hero -> coach (story first, builds trust) -> what you get (split list) -> plans -> how to start + contact. A fixed altitude gauge rises as you scroll. */
 :root{
   --bg:#0A0D10; --surface:#12171C; --fg:#ECF1F4; --muted:#8B98A3; --line:#1E2830;
   --accent:#2A98DC; --accent-ink:#FFFFFF; --accent-soft:rgba(42,152,220,.14); --ridge:#FFFFFF;
@@ -126,28 +126,16 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .head{display:grid;gap:16px;margin-bottom:clamp(36px,5vw,56px)}
 .head h2{font-size:clamp(44px,7vw,88px)}
 
-/* What you get */
-.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.feat{background:var(--bg);padding:28px 24px 32px;display:grid;gap:14px;align-content:start;transition:background .25s}
-.feat:hover{background:var(--surface)}
-.feat .ico{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--accent-soft);color:var(--accent);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.feat:hover .ico{transform:translateY(-6px)}
-.feat h3{font-size:26px;overflow-wrap:break-word;hyphens:auto}
-.feat p{color:var(--muted);font-size:16px}
-
-/* Route */
-.route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:end}
-.stage{display:grid;gap:14px}
-.stage .col{background:linear-gradient(to top,var(--accent-soft),transparent);border-top:2px solid var(--accent);transform-origin:bottom;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
-.stage:nth-child(1) .col{height:60px}
-.stage:nth-child(2) .col{height:120px}
-.stage:nth-child(3) .col{height:180px}
-.stage:nth-child(4) .col{height:240px;background:linear-gradient(to top,var(--accent-soft),color-mix(in srgb,var(--accent) 30%,transparent))}
-.route.pre .col{transform:scaleY(.25)}
-.stage .camp{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:space-between;gap:8px}
-.stage .camp b{font-weight:500;color:var(--muted)}
-.stage h3{font-size:30px}
-.stage p{color:var(--muted);font-size:16px}
+/* What you get: sticky heading left, list of rows right */
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,6vw,96px);align-items:start}
+.split .head{margin:0;position:sticky;top:132px}
+.split .head h2{font-size:clamp(40px,5.6vw,76px)}
+.feats{display:grid;border-top:1px solid var(--line)}
+.feat{display:grid;grid-template-columns:44px minmax(0,1fr);gap:6px 20px;padding:26px 0;border-bottom:1px solid var(--line)}
+.feat .ico{grid-row:span 2;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--accent-soft);color:var(--accent);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.feat:hover .ico{transform:translateY(-4px)}
+.feat h3{font-size:28px;overflow-wrap:break-word;hyphens:auto;padding-top:6px}
+.feat p{color:var(--muted);font-size:16px;max-width:52ch}
 
 /* Plans */
 .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
@@ -166,13 +154,13 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .plan li::before{content:"";width:10px;height:10px;margin-top:8px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
 .plan .btn{justify-content:center}
 .note{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:20px;letter-spacing:.04em}
+.swipe{display:none}
 
-/* Coach profile */
-.coach{display:grid;gap:clamp(28px,4vw,48px)}
-.coach-head{display:grid;gap:14px}
-.coach-head h2{font-size:clamp(44px,6.4vw,84px)}
-.coach-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center}
-.side{display:grid;gap:28px;min-width:0}
+/* Coach profile: photos + facts stay put on the left while the story reads on the right */
+.coach-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:"side head" "side text";column-gap:clamp(32px,6vw,88px);row-gap:28px;align-items:start}
+.coach-head{grid-area:head;display:grid;gap:14px}
+.coach-head h2{font-size:clamp(40px,5vw,68px)}
+.side{grid-area:side;display:grid;gap:24px;min-width:0;position:sticky;top:132px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pair figure{margin:0;display:grid;gap:10px;min-width:0}
 .pair .frame{overflow:hidden;border:1px solid var(--line);aspect-ratio:2/3;max-width:100%;background:var(--surface)}
@@ -181,21 +169,33 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .pair .was img{filter:saturate(.8)}
 .pair figcaption{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .pair figcaption span:first-child{color:var(--accent)}
-.coach .text{display:grid;gap:18px;min-width:0}
+.profile{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border-top:1px solid var(--line)}
+.profile div{padding:14px 12px 0 0;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.profile dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.profile dd{margin:0;font-family:var(--display);font-size:28px;line-height:1;text-transform:uppercase}
+.coach .text{grid-area:text;display:grid;gap:18px;min-width:0}
 .coach .text p{color:var(--muted);font-size:18px;line-height:1.7;max-width:62ch}
 .coach .text p.close{color:var(--fg)}
-.coach .text p.sig{font-family:var(--display);text-transform:uppercase;font-size:32px;letter-spacing:.02em;color:var(--accent);line-height:1}
-.stats{display:flex;flex-wrap:wrap;gap:32px;border-top:1px solid var(--line);padding-top:22px;margin-top:6px}
-.stats div{display:grid;gap:2px}
-.stats b{font-family:var(--display);font-weight:400;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
-.stats span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-@media (max-width:960px){.coach-body{grid-template-columns:1fr}.side{max-width:560px}}
+.coach .text p.sig{display:flex;align-items:center;gap:12px;margin-top:6px;font-size:15px;line-height:1.2;color:var(--muted)}
+.coach .text p.sig::before{content:"";width:28px;height:1px;background:var(--accent)}
+.coach .text p.sig .name{color:var(--fg);font-weight:600}
+@media (max-width:960px){
+  .coach-grid{grid-template-columns:1fr;grid-template-areas:"head" "side" "text"}
+  .side{position:static;max-width:560px}
+  .split{grid-template-columns:1fr}
+  .split .head{position:static}
+}
 
 /* Contact */
 .contact{text-align:left}
 .contact h2{font-size:clamp(56px,10vw,140px);line-height:.88}
 .contact h2 em{font-style:normal;color:var(--accent)}
-.channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.steps{list-style:none;margin:clamp(36px,5vw,56px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
+.steps li{display:grid;gap:10px;align-content:start;border-top:1px solid var(--line);padding-top:18px}
+.steps .n{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--accent)}
+.steps h3{font-size:30px}
+.steps p{color:var(--muted);font-size:16px;max-width:40ch}
+.channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:clamp(36px,5vw,56px)}
 .channel{background:var(--bg);padding:24px;display:grid;gap:6px;text-decoration:none;transition:background .2s}
 .channel:hover{background:var(--surface)}
 .channel span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
@@ -218,28 +218,40 @@ footer img{height:28px;width:auto}
 .reveal.pre{transform:translateY(32px)}
 
 @media (max-width:960px){
-  .route{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .plans{grid-template-columns:1fr;max-width:520px}
   .channels{grid-template-columns:1fr}
   .nav ul{display:none}
 }
 @media (max-width:540px){
-  .grid4{grid-template-columns:1fr}
-  .route{grid-template-columns:1fr;gap:28px}
-  .stage .col{display:none}
+  .feat{grid-template-columns:36px minmax(0,1fr);gap:4px 14px;padding:18px 0}
+  .feat .ico{width:36px;height:36px}
+  .feat h3{font-size:22px;padding-top:4px}
+  .feat p{font-size:15px}
+  .profile dd{font-size:24px}
+  .channel{padding:18px 20px}
+  .steps{grid-template-columns:1fr;gap:0}
+  .steps li{grid-template-columns:28px minmax(0,1fr);gap:2px 12px;padding:16px 0}
+  .steps .n{grid-row:span 2;padding-top:6px}
+  .steps h3{font-size:24px}
   .brand img{height:52px}
   .nav .wrap{min-height:76px}
 }
+@media (max-width:640px){
+  .plans{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;max-width:none;margin-inline:calc(var(--gutter) * -1);padding:14px var(--gutter) 6px;scrollbar-width:none}
+  .plans::-webkit-scrollbar{display:none}
+  .plan{flex:0 0 84%;scroll-snap-align:center}
+  .plan:hover{transform:none}
+  .plan.feature{order:-1}
+  .swipe{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .reveal.pre,.route.pre .col{transform:none}
+  .reveal.pre{transform:none}
   html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
-
 
 <nav class="nav" aria-label="Main">
   <div class="wrap">
@@ -248,10 +260,10 @@ footer img{height:28px;width:auto}
       <img class="logo-on-light" src="logo-dark.png" alt="Ascend 1:1 Personal Coaching">
     </a>
     <ul>
-      <li><a href="#coaching">Coaching</a></li>
       <li><a href="#coach">Your coach</a></li>
+      <li><a href="#coaching">What you get</a></li>
       <li><a href="#plans">Plans</a></li>
-      <li><a href="#route">How it works</a></li>
+      <li><a href="#contact">How to start</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang" role="group" aria-label="Idioma / Language">
@@ -286,13 +298,46 @@ footer img{height:28px;width:auto}
   </div>
 </div>
 
+<section class="block" id="coach">
+  <div class="wrap coach coach-grid">
+    <div class="coach-head reveal">
+      <p class="eyebrow">Your coach</p>
+      <h2>From the chubby kid to your gym partner.</h2>
+    </div>
+    <div class="side reveal">
+      <div class="pair">
+        <figure class="was">
+          <div class="frame"><img src="story-before2.jpg" alt="Before starting, around 240 pounds" loading="lazy"></div>
+          <figcaption><span>Before</span><span>Around 240 lb</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame"><img src="coach-after2.jpg" alt="Marcos, Ascend coach, today" loading="lazy"></div>
+          <figcaption><span>Today</span><span>Age 22</span></figcaption>
+        </figure>
+      </div>
+      <dl class="profile">
+        <div><dt>Coach</dt><dd>Marcos</dd></div>
+        <div><dt>Training since</dt><dd>2023</dd></div>
+        <div><dt>Format</dt><dd>1:1</dd></div>
+      </dl>
+    </div>
+    <div class="text reveal">
+        <p>Growing up, I was always the chubby kid. I went through a lot of bullying, and by 16 I weighed 240 pounds. I'd look in the mirror and feel I was too young to feel that bad.</p>
+        <p>I wanted to change, but I didn't know how. I barely ate once a day and just ran and ran. In six months I dropped to 160 pounds, while wearing myself down physically and mentally. It was a really low point: I talked to myself cruelly and kept pushing, even though I was hurting myself.</p>
+        <p>In 2023 I started going to the gym and, little by little, built a healthier relationship with myself. I developed discipline, met incredible people and learned to take care of myself and love myself.</p>
+        <p class="close">That's where ASCEND comes from. I know what it's like to want to change and feel lost. I want to help you progress, listen when something gets hard and give you genuine support. I want you to feel confident talking to me and know we're in this together.</p>
+        <p class="sig"><span class="name">Marcos</span><span>Ascend coach</span></p>
+    </div>
+  </div>
+</section>
+
 <section class="block" id="coaching">
-  <div class="wrap">
+  <div class="wrap split">
     <div class="head reveal">
       <p class="eyebrow">What you get</p>
       <h2>Everything you need.<br>Nothing you don't.</h2>
     </div>
-    <div class="grid4 reveal">
+    <div class="feats reveal">
       <article class="feat">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M3 8v8M21 8v8M6 12h12"/></svg></div>
         <h3>Custom program</h3>
@@ -313,41 +358,6 @@ footer img{height:28px;width:auto}
         <h3>Accountability partner</h3>
         <p>Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.</p>
       </article>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="coach">
-  <div class="wrap coach">
-    <div class="coach-head reveal">
-      <p class="eyebrow">Your coach</p>
-      <h2>From the chubby kid to your gym partner.</h2>
-    </div>
-    <div class="coach-body">
-      <div class="side reveal">
-      <div class="pair">
-        <figure class="was">
-          <div class="frame"><img src="story-before2.jpg" alt="Before starting, around 240 pounds" loading="lazy"></div>
-          <figcaption><span>Before</span><span>Around 240 lb</span></figcaption>
-        </figure>
-        <figure>
-          <div class="frame"><img src="coach-after2.jpg" alt="Your Ascend coach today" loading="lazy"></div>
-          <figcaption><span>Today</span><span>Age 22</span></figcaption>
-        </figure>
-      </div>
-      <div class="stats">
-          <div><b>1:1</b><span>Every client</span></div>
-          <div><b>2023</b><span>Training since</span></div>
-          <div><b>22</b><span>Years old</span></div>
-      </div>
-      </div>
-      <div class="text reveal">
-        <p>Growing up, I was always the chubby kid. I went through a lot of bullying, and by 16 I weighed 240 pounds. I'd look in the mirror and feel I was too young to feel that bad.</p>
-        <p>I wanted to change, but I didn't know how. I barely ate once a day and just ran and ran. In six months I dropped to 160 pounds, while wearing myself down physically and mentally. It was a really low point: I talked to myself cruelly and kept pushing, even though I was hurting myself.</p>
-        <p>In 2023 I started going to the gym and, little by little, built a healthier relationship with myself. I developed discipline, met incredible people and learned to take care of myself and love myself.</p>
-        <p class="close">That's where ASCEND comes from. I know what it's like to want to change and feel lost. I want to help you progress, listen when something gets hard and give you genuine support. I want you to feel confident talking to me and know we're in this together.</p>
-        <p class="sig">—Marcos</p>
-      </div>
     </div>
   </div>
 </section>
@@ -397,42 +407,7 @@ footer img{height:28px;width:auto}
         <a class="btn btn-ghost" href="https://ig.me/m/ascend1on1" target="_blank" rel="noopener">Let me know when it opens</a>
       </article>
     </div>
-  </div>
-</section>
-
-<section class="block" id="route">
-  <div class="wrap">
-    <div class="head reveal">
-      <p class="eyebrow">How it works</p>
-      <h2>The route to the top</h2>
-      <p class="lede">Same climb for everybody. We take it at your pace, together.</p>
-    </div>
-    <div class="route pre" id="routeSteps">
-      <div class="stage">
-        <div class="col"></div>
-        <p class="camp">Base camp <b>Week 1</b></p>
-        <h3>Assess</h3>
-        <p>We talk about your goals, your schedule and where you're at right now. No judgment.</p>
-      </div>
-      <div class="stage">
-        <div class="col"></div>
-        <p class="camp">Camp 1 <b>Weeks 2–4</b></p>
-        <h3>Build</h3>
-        <p>I teach you the movements and we build a routine you'll actually stick to.</p>
-      </div>
-      <div class="stage">
-        <div class="col"></div>
-        <p class="camp">Camp 2 <b>Weeks 5–12</b></p>
-        <h3>Progress</h3>
-        <p>We add weight, adjust the plan and you start seeing it in the mirror.</p>
-      </div>
-      <div class="stage">
-        <div class="col"></div>
-        <p class="camp">Summit <b>Week 12+</b></p>
-        <h3>Peak</h3>
-        <p>You hit your goal. Then we pick the next one together. There's always a higher peak.</p>
-      </div>
-    </div>
+    <p class="swipe" aria-hidden="true">Swipe to see all plans</p>
   </div>
 </section>
 
@@ -440,7 +415,12 @@ footer img{height:28px;width:auto}
   <div class="wrap">
     <p class="eyebrow reveal">Let's go</p>
     <h2 class="reveal">Ready to<br><em>ascend?</em></h2>
-    <p class="lede reveal" style="margin-top:20px">Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.</p>
+    <p class="lede reveal" style="margin-top:20px">Three steps and we start. I'll get back to you within 24 hours.</p>
+    <ol class="steps reveal">
+      <li><span class="n">01</span><h3>Message me</h3><p>Send me a DM or a WhatsApp with your goal and how many days you can train.</p></li>
+      <li><span class="n">02</span><h3>Initial assessment</h3><p>You answer a few questions about your goals, history and schedule, and we take your starting weight and photos.</p></li>
+      <li><span class="n">03</span><h3>We start</h3><p>I build your routine and we get to work. Every week we check in and adjust together.</p></li>
+    </ol>
     <div class="channels reveal">
       <a class="channel" href="https://instagram.com/ascend1on1" target="_blank" rel="noopener">
         <span>Instagram</span><strong>@ascend1on1</strong>
@@ -518,11 +498,6 @@ footer img{height:28px;width:auto}
     items.forEach(function(el){ if(el.getBoundingClientRect().top>window.innerHeight) el.classList.add('pre'); });
     var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target);} }); },{rootMargin:'0px 0px -8% 0px'});
     items.forEach(function(el){ io.observe(el); });
-    var route=document.getElementById('routeSteps');
-    var ro=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ setTimeout(function(){route.classList.remove('pre');},150); ro.disconnect(); } },{threshold:.35});
-    ro.observe(route);
-  } else {
-    document.getElementById('routeSteps').classList.remove('pre');
   }
 
   /* Altitude gauge */
@@ -578,7 +553,11 @@ footer img{height:28px;width:auto}
     "Let's go":"Vamos","Ready to":"¿Listo para","ascend?":"ascender?",
     "Hit me up with your goal and how many days you can train. I'll get back to you within 24 hours and we'll figure it out together.":"Escríbeme con tu meta y cuántos días puedes entrenar. Te contesto en menos de 24 horas y lo resolvemos juntos.",
     "Accountability partner":"Compañero de responsabilidad y apoyo","Someone in your corner every day. Rough week, low motivation or a big win, I'm there to keep you on track and back you up.":"Alguien en tu esquina todos los días. Una semana difícil, poca motivación o un logro grande, aquí estoy para mantenerte enfocado y apoyarte.",
-    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA",
+    "Ascend 1:1 Personal Coaching":"Ascend Coaching Personal 1:1","SUMMIT":"CIMA","What you get":"Lo que recibes","How to start":"Cómo empezar","Format":"Modalidad","Ascend coach":"Coach de Ascend","Swipe to see all plans":"Desliza para ver todos los planes",
+    "Three steps and we start. I'll get back to you within 24 hours.":"Tres pasos y arrancamos. Te contesto en menos de 24 horas.",
+    "Message me":"Escríbeme","Send me a DM or a WhatsApp with your goal and how many days you can train.":"Mándame un DM o un WhatsApp con tu meta y cuántos días puedes entrenar.",
+    "Initial assessment":"Evaluación inicial","You answer a few questions about your goals, history and schedule, and we take your starting weight and photos.":"Contestas unas preguntas sobre tus metas, historial y horario, y tomamos tu peso y fotos de inicio.",
+    "We start":"Arrancamos","I build your routine and we get to work. Every week we check in and adjust together.":"Te monto la rutina y nos ponemos a trabajar. Cada semana revisamos y ajustamos juntos.",
     "Growing up, I was always the chubby kid. I went through a lot of bullying, and by 16 I weighed 240 pounds. I'd look in the mirror and feel I was too young to feel that bad.":"Desde pequeño fui el nene gordito. Pasé por mucho bullying y a los 16 años llegué a pesar 240 libras. Me miraba al espejo y sentía que estaba demasiado joven para sentirme tan mal.",
     "I wanted to change, but I didn't know how. I barely ate once a day and just ran and ran. In six months I dropped to 160 pounds, while wearing myself down physically and mentally. It was a really low point: I talked to myself cruelly and kept pushing, even though I was hurting myself.":"Quería cambiar, pero no sabía cómo. Comía apenas una vez al día y me dedicaba a correr y correr. En seis meses bajé a 160 libras, mientras me desgastaba física y mentalmente. Fue una etapa bien baja: me hablaba con crueldad y me exigía seguir, aunque me estaba haciendo daño.",
     "In 2023 I started going to the gym and, little by little, built a healthier relationship with myself. I developed discipline, met incredible people and learned to take care of myself and love myself.":"En 2023 comencé en el gimnasio y poco a poco construí una relación más bonita conmigo mismo. Desarrollé disciplina, conocí personas increíbles y aprendí a cuidarme y a quererme.",
