@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="dark">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Ascend: coaching personal 1:1. Entrena con un pana que te arma el plan y entrena a tu lado.">
 <meta property="og:title" content="Ascend Coaching">
@@ -23,22 +24,6 @@
   --gutter:clamp(16px,4vw,48px);
   color-scheme:dark;
 }
-@media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){
-    --bg:#F1F4F6; --surface:#FFFFFF; --fg:#0A0E11; --muted:#55626D; --line:#D6DEE4;
-    --accent:#1C83C4; --accent-ink:#FFFFFF; --accent-soft:rgba(28,131,196,.10); --ridge:#0A0E11;
-    color-scheme:light;
-  }
-  :root:not([data-theme="dark"]) .logo-on-dark{display:none}
-  :root:not([data-theme="dark"]) .logo-on-light{display:block}
-}
-:root[data-theme="light"]{
-  --bg:#F1F4F6; --surface:#FFFFFF; --fg:#0A0E11; --muted:#55626D; --line:#D6DEE4;
-  --accent:#1C83C4; --accent-ink:#FFFFFF; --accent-soft:rgba(28,131,196,.10); --ridge:#0A0E11;
-  color-scheme:light;
-}
-:root[data-theme="light"] .logo-on-dark{display:none}
-:root[data-theme="light"] .logo-on-light{display:block}
 .logo-on-light{display:none}
 
 *,*::before,*::after{box-sizing:border-box}
@@ -663,7 +648,6 @@ footer img{height:28px;width:auto}
     new IntersectionObserver(function(e){ running=e[0].isIntersecting; }).observe(cv);
     requestAnimationFrame(loop);
   }
-  try{ window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',draw); }catch(e){}
   new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
   /* Scroll settle: content is always visible; items below the fold just slide into place */
