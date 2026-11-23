@@ -165,16 +165,15 @@ section.block{padding-block:clamp(72px,10vw,128px);border-bottom:1px solid var(-
 .coach .text{grid-area:text;display:grid;gap:18px;min-width:0}
 .coach .text p{color:var(--muted);font-size:18px;line-height:1.7;max-width:62ch}
 .coach .text p.close{color:var(--fg)}
-.more{display:grid}
-.more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;width:max-content;font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);padding:6px 0;border-bottom:1px solid currentColor}
-.more summary::-webkit-details-marker{display:none}
-.more summary::after{content:"";width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
-.more[open] summary::after{transform:translateY(2px) rotate(-135deg)}
-.more .close-l,.more[open] .open-l{display:none}
-.more[open] .close-l{display:inline}
-.more-body{display:grid;gap:18px;padding-top:18px}
-.more[open] summary{order:2;margin-top:18px}
-.more[open] .more-body{order:1;padding-top:0}
+.more{position:relative;max-height:5.1em;overflow:hidden;font-size:18px;-webkit-mask-image:linear-gradient(#000 15%,transparent);mask-image:linear-gradient(#000 15%,transparent);transition:max-height .6s cubic-bezier(.2,.8,.2,1)}
+.more.open{-webkit-mask-image:none;mask-image:none}
+.more-body{display:grid;gap:18px}
+.more-btn{justify-self:start;display:inline-flex;align-items:center;gap:10px;margin-top:-6px;padding:11px 18px;border-radius:999px;border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);background:var(--accent-soft);color:var(--fg);font-family:var(--body);font-weight:600;font-size:14px;letter-spacing:.04em;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.more-btn:hover{background:color-mix(in srgb,var(--accent) 26%,transparent);border-color:var(--accent);transform:translateY(-1px)}
+.more-btn svg{color:var(--accent);transition:transform .3s}
+.more-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.more-btn .close-l,.more-btn[aria-expanded="true"] .open-l{display:none}
+.more-btn[aria-expanded="true"] .close-l{display:inline}
 .coach .text p.sig{display:flex;align-items:center;gap:12px;margin-top:6px;font-size:15px;line-height:1.2;color:var(--muted)}
 .coach .text p.sig::before{content:"";width:28px;height:1px;background:var(--accent)}
 .coach .text p.sig .name{color:var(--fg);font-weight:600}
@@ -434,13 +433,13 @@ footer img{height:28px;width:auto}
     </div>
     <div class="text reveal">
         <p>Growing up, I was always the chubby kid. I went through a lot of bullying, and by 16 I weighed 240 pounds. I'd look in the mirror and feel I was too young to feel that bad.</p>
-        <details class="more">
-          <summary><span class="open-l">Read the full story</span><span class="close-l">Show less</span></summary>
+        <div class="more" id="storyMore">
           <div class="more-body">
             <p>I wanted to change, but I didn't know how. I barely ate once a day and just ran and ran. In six months I dropped to 160 pounds, while wearing myself down physically and mentally. It was a really low point: I talked to myself cruelly and kept pushing, even though I was hurting myself.</p>
             <p>In 2023 I started going to the gym and, little by little, built a healthier relationship with myself. I developed discipline, met incredible people and learned to take care of myself and love myself.</p>
           </div>
-        </details>
+        </div>
+        <button type="button" class="more-btn" id="storyBtn" aria-expanded="false" aria-controls="storyMore"><span class="open-l">Read the full story</span><span class="close-l">Show less</span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
         <p class="close">That's where ASCEND comes from. I know what it's like to want to change and feel lost. I want to help you progress, listen when something gets hard and give you genuine support. I want you to feel confident talking to me and know we're in this together.</p>
         <p class="sig"><span class="name">Marcos</span><span>Ascend coach</span></p>
     </div>
@@ -681,6 +680,16 @@ footer img{height:28px;width:auto}
   var tk=null; scrs.addEventListener('scroll',function(){ if(tk) return; tk=requestAnimationFrame(function(){ tk=null; appCur=Math.round(scrs.scrollLeft/scrs.clientWidth); markStep(appCur); }); },{passive:true});
   if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ seen=e[0].isIntersecting; },{threshold:.3}).observe(scrs); } else { seen=true; }
   setInterval(function(){ if(seen && !document.hidden && Date.now()>idleUntil) showScr((appCur+1)%3); },4000);
+
+  /* Bio: fade-out teaser that expands smoothly */
+  var sMore=document.getElementById('storyMore'), sBtn=document.getElementById('storyBtn');
+  sBtn.addEventListener('click',function(){
+    var open=sBtn.getAttribute('aria-expanded')!=='true';
+    sBtn.setAttribute('aria-expanded',open?'true':'false');
+    if(open){ sMore.classList.add('open'); sMore.style.maxHeight=sMore.scrollHeight+'px'; }
+    else { sMore.style.maxHeight=''; sMore.classList.remove('open'); var t=sMore.getBoundingClientRect().top; if(t<80) window.scrollBy({top:t-140,behavior:reduce?'auto':'smooth'}); }
+  });
+  window.addEventListener('resize',function(){ if(sMore.classList.contains('open')) sMore.style.maxHeight=sMore.scrollHeight+'px'; });
 
   /* Phone menu */
   var menu=document.getElementById('menu'), mBtn=document.getElementById('menuBtn'), mClose=document.getElementById('menuClose');
